@@ -1,0 +1,11 @@
+<template name="userInfoTemplate">
+    <view class="user-info">
+        <image class="user-avatar" src="http://134.175.125.45/images/head.jpg" />
+        <view class="user-level-money">
+            <text class="user-level">LV 3</text>
+            <text class="user-money">￥ 99</text>
+        </view>
+        <text class="user-exp-text">EXP</text>
+        <progress class="user-exp-progress" percent="50" color="#0060AC" />
+    </view>
+</template>
