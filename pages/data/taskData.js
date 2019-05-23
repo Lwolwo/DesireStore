@@ -1,3 +1,9 @@
+/**
+ * frequency: daily、weekly、weekdays、String(0-1-2-3-4-5-6)0-6对应周一到周日，用-连接
+ * status: 0未完成 1完成
+ * today: 0今日未完成 1今日完成
+ */
+
 var taskData = [
   {
     taskid: 0,
@@ -6,6 +12,8 @@ var taskData = [
     difficulty: 0,
     time: 'long',
     frequency: 'daily',
+    status: 0,
+    today: 1
   },
   {
     taskid: 1,
@@ -14,6 +22,8 @@ var taskData = [
     difficulty: 1,
     time: 'long',
     frequency: 'daily',
+    status: 0,
+    today: 0
   },
   {
     taskid: 2,
@@ -22,6 +32,8 @@ var taskData = [
     difficulty: 1,
     time: 'long',
     frequency: 'daily',
+    status: 0,
+    today: 1
   },
   {
     taskid: 3,
@@ -30,6 +42,8 @@ var taskData = [
     difficulty: 2,
     time: 'short',
     frequency: 'daily',
+    status: 1,
+    today: 0
   },
   {
     taskid: 4,
@@ -38,6 +52,8 @@ var taskData = [
     difficulty: 1,
     time: null,
     frequency: null,
+    status: 0,
+    today: 0
   },
   {
     taskid: 5,
@@ -46,6 +62,8 @@ var taskData = [
     difficulty: 0,
     time: null,
     frequency: null,
+    status: 1,
+    today: 0
   },
   {
     taskid: 6,
@@ -54,6 +72,8 @@ var taskData = [
     difficulty: 0,
     time: null,
     frequency: null,
+    status: 0,
+    today: 0
   },
   {
     taskid: 7,
@@ -62,7 +82,19 @@ var taskData = [
     difficulty: 3,
     time: null,
     frequency: null,
-  }
+    status: 0,
+    today: 0
+  },
+  {
+    taskid: 8,
+    title: '家教',
+    typeid: 1,
+    difficulty: 3,
+    time: null,
+    frequency: null,
+    status: 0,
+    today: 0
+  },
 ]
 
 module.exports = {

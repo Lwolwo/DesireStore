@@ -25,41 +25,55 @@
     background: #3F51B5;
 }
 
-.task-container .task {
-    margin: 30rpx;
+.task-container .task,
+.task-container .task-todaychecked-container,
+.task-container .task-checked-container {
+    margin: 0 30rpx;
 }
 
-.task-container .task .task-item {
+.task-container .task-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10rpx 0;
 }
 
-.task-container .task .task-item .wx-checkbox-input {
+.task-container .task-item .wx-checkbox-input {
     width: 35rpx;
     height: 35rpx;
     transform: translate(5rpx, -4rpx);
 }
 
-.task-container .task .task-item .wx-checkbox-input-checked {
+.task-container .task-item .wx-checkbox-input-checked {
     background: #ccc;
 }
 
-.task-container .task .task-item .wx-checkbox-input-checked::before {
+.task-container .task-item .wx-checkbox-input-checked::before {
     color: #656565;
     font-size: 30rpx;
 }
 
-.task-container .task .task-item .item-title {
+.task-container .task-item .item-title {
     flex: 1;
     margin-left: 10rpx;
     font-size: 28rpx;
     color: #3F51B5;
 }
 
-.task-container .task .task-item .item-reward {
+.task-container .task-item .item-reward {
     font-size: 24rpx;
     color: #656565;
 }
 
+.task-container .todaychecked-bar,
+.task-container .checked-bar {
+    font-size: 24rpx;
+    color: #656565;
+    background: #f2f2f2;
+    padding: 5rpx 0;
+}
+
+.task-container .todaychecked-bar .bar-text,
+.task-container .checked-bar .bar-text {
+    margin-left: 30rpx;
+}
