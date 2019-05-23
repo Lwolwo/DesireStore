@@ -1,7 +1,5 @@
 const taskData = require('../../data/taskData.js')
 
-const watch = require('../../util/watch.js')
-
 Page({
 
   /**
@@ -15,13 +13,13 @@ Page({
     ],
     currentbar: 0,
     reward: [2, 4, 6, 8],
+    taskData: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    watch.setWatcher(this)  // 设置监听器
     this.setData({
       taskData: taskData.taskData,
     })
@@ -36,11 +34,52 @@ Page({
       }
     }
   },
+  // 计算属性
+  computed: {
+    todaycheckedNum: {
+      require: ['taskData', 'currentbar'],
+      fn({ taskData, currentbar }) {
+        var result = 0
+        taskData.map(function (item) {
+          if (item.typeid === currentbar && !item.status && item.today) {
+            result++
+          }
+        })
+        return result
+      }
+    },
+    checkedNum: {
+      require: ['taskData', 'currentbar'],
+      fn({ taskData, currentbar }) {
+        var result = 0
+        taskData.map(function (item) {
+          if (item.typeid === currentbar && item.status) {
+            result++
+          }
+        })
+        return result
+      }
+    }
+  },
   // 切换tab事件
   changeTab: function (e) {
     var typeid = e.currentTarget.dataset.typeid
     this.setData({
       currentbar: typeid
     })
+  },
+  // 复选框选中事件
+  checkboxChange: function (e) {
+    var taskid = e.currentTarget.dataset.taskid
+    var typeid = this.data.taskData[taskid].typeid
+    if (typeid === 1 || typeid === 2) {
+      // TODO 修改任务的状态
+      this.data.taskData[taskid].status = !this.data.taskData[taskid].status
+      this.data.taskData[taskid].status ? this.data.checkedNum++ : this.data.checkedNum--
+      this.setData({
+        taskData: this.data.taskData,
+        checkedNum: this.data.checkedNum
+      })
+    }
   }
 })

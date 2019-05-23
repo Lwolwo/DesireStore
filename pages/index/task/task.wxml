@@ -9,13 +9,33 @@
     </view>
     <view class="task">
         <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
-            <block wx:if="{{ item.typeid === currentbar }}">
-                <view class="task-item">
-                    <checkbox class="item-checkbox" checked="{{ false }}" />
-                    <text class="item-title">{{ item.title }}</text>
-                    <text class="item-reward">{{ item.time === 'short' ? '短期任务' : '+' + reward[item.difficulty] }}</text>
-                </view>
+            <block wx:if="{{ item.typeid === currentbar && !item.status && !item.today }}">
+                <template is="taskTemplate" data="{{ item, reward: reward }}"/>
             </block>
         </block>
+    </view>
+    <view wx:if="{{ todaycheckedNum }}" class="task-todaychecked">
+        <view class="todaychecked-bar">
+            <text class="bar-text">今日已完成</text>
+        </view>
+        <view class="task-todaychecked-container">
+            <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
+                <block wx:if="{{ item.typeid === currentbar && !item.status && item.today }}">
+                    <template is="taskTemplate" data="{{ item, reward: reward }}" />
+                </block>
+            </block>
+        </view>
+    </view>
+    <view wx:if="{{ checkedNum }}" class="task-checked">
+        <view class="checked-bar">
+            <text class="bar-text">已完成</text>
+        </view>
+        <view class="task-checked-container">
+            <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
+                <block wx:if="{{ item.typeid === currentbar && item.status }}">
+                    <template is="taskTemplate" data="{{ item, reward: reward }}" />
+                </block>
+            </block>
+        </view>
     </view>
 </view>
