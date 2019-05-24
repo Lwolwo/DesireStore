@@ -1,4 +1,5 @@
 const taskData = require('../../data/taskData.js')
+const userData = require('../../data/userData.js')
 
 Page({
 
@@ -22,6 +23,7 @@ Page({
   onLoad: function (options) {
     this.setData({
       taskData: taskData.taskData,
+      userData: userData.userData
     })
   },
   // 数据监听器

@@ -1,0 +1,31 @@
+/* pages/index/store/store.wxss */
+.store-container .desire {
+    margin: 30rpx;
+}
+
+.store-container .desire .desire-item {
+    display: flex;
+    align-items: center;
+    padding: 10rpx;
+}
+
+.store-container .desire .desire-item:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+}
+
+.store-container .desire .desire-item .item-grade {
+    font-size: 24rpx;
+    color: #656565;
+}
+
+.store-container .desire .desire-item .item-title {
+    font-size: 28rpx;
+    color: #3F51B5;
+    flex: 1;
+    margin-left: 20rpx;
+}
+
+.store-container .desire .desire-item .item-price {
+    font-size: 24rpx;
+    color: #656565;
+}

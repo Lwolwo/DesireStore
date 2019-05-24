@@ -1,6 +1,6 @@
 <import src="../template/template.wxml"></import>
 <view class="task-container">
-    <template is="userInfoTemplate" />
+    <template is="userInfoTemplate" data="{{ user:userData }}"/>
     <view class="navbar">
         <block wx:for="{{ navigation }}" wx:for-item="item" wx:key="{{ item.typeid }}">
             <text class="navbar-item navbar-item-selected" wx:if="{{ currentbar == item.typeid }}" data-typeid="{{ item.typeid }}" catch:tap="changeTab">{{ item.title }}</text>

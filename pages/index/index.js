@@ -1,4 +1,4 @@
-// pages/index/index.js
+const userData = require('../data/userData.js')
 Page({
 
   /**
@@ -6,9 +6,19 @@ Page({
    */
   data: {
   },
+  onLoad: function (options) {
+    this.setData({
+      userData: userData.userData
+    })
+  },
   goTask: function () {
     wx.navigateTo({
       url: 'task/task',
+    })
+  },
+  goStore: function () {
+    wx.navigateTo({
+      url: 'store/store',
     })
   }
 })

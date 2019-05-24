@@ -1,0 +1,11 @@
+<import src="../template/template.wxml" />
+<view class="store-container">
+    <template is="userInfoTemplate" data="{{ user:userData }}" />
+    <view class="desire">
+        <block wx:for="{{ desireData }}" wx:for-item="item" wx:key="{{ item.desireid }}">
+            <block wx:if="{{ !item.get }}">
+                <template is="desireTemplate" data="{{ item, price: price }}" />
+            </block>
+        </block>
+    </view>
+</view>
