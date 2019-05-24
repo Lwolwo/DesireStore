@@ -1,4 +1,5 @@
 const taskData = require('../../data/taskData.js')
+const userData = require('../../data/userData.js')
 
 Page({
 
@@ -22,6 +23,7 @@ Page({
   onLoad: function (options) {
     this.setData({
       taskData: taskData.taskData,
+      userData: userData.userData
     })
   },
   // 数据监听器
@@ -72,13 +74,81 @@ Page({
   checkboxChange: function (e) {
     var taskid = e.currentTarget.dataset.taskid
     var typeid = this.data.taskData[taskid].typeid
+    var user = this.data.userData
+    // 主线任务和支线任务都是一次性任务
     if (typeid === 1 || typeid === 2) {
       // TODO 修改任务的状态
       this.data.taskData[taskid].status = !this.data.taskData[taskid].status
-      this.data.taskData[taskid].status ? this.data.checkedNum++ : this.data.checkedNum--
+      this.data.taskData[taskid].status ? this.data.checkedNum++ : this.data.checkedNum-- // 手动更新“已完成”数量，触发视图渲染
+      var money = 0
+      if (this.data.taskData[taskid].status) {
+        money = this.data.reward[this.data.taskData[taskid].difficulty]
+      }
+      else {
+        money = -this.data.reward[this.data.taskData[taskid].difficulty]
+      }
+      user.money += money
       this.setData({
         taskData: this.data.taskData,
-        checkedNum: this.data.checkedNum
+        checkedNum: this.data.checkedNum,
+        userData: user
+      })
+    } 
+    // 日常任务需要计算次数
+    else {
+      // TODO 修改任务状态
+      var task = this.data.taskData[taskid]
+      var user = this.data.userData
+      var money = 0
+      // 任务处于未完成情况，并且今天未check
+      if (!task.today && !task.status) {
+        task.today = !task.today
+        task.checkcount++
+        // 今天check后，任务达成
+        if (task.checkcount === task.count) {
+          task.status = !task.status
+          this.data.checkedNum++
+          // 短期任务完成需要一次性加￥
+          money = this.data.reward[task.difficulty] * task.count
+        }
+        // 今天check后，任务还未完成
+        else {
+          this.data.todaycheckedNum++
+          if (task.time === 'long') {
+            money = this.data.reward[task.difficulty]
+          }
+        }
+      }
+      // 任务处于未完成情况，但是今天已经check
+      else if (task.today && !task.status) {
+        task.today = !task.today
+        task.checkcount--
+        this.data.todaycheckedNum--
+        if (task.time === 'long') {
+          money = -this.data.reward[task.difficulty]
+        }
+      }
+      // 任务已完成，且是今天刚刚完成的
+      else if (task.today && task.status) {
+        task.status = !task.status
+        this.data.checkedNum--
+        task.today = !task.today
+        task.checkcount--
+        money = -this.data.reward[task.difficulty] * task.count
+      }
+      // 任务已完成，但是不是今天完成的
+      else {
+        task.status = !task.status
+        this.data.checkedNum--
+        money = -this.data.reward[task.difficulty] * task.count
+      }
+      this.data.taskData[taskid] = task
+      user.money += money
+      this.setData({
+        taskData: this.data.taskData,
+        checkedNum: this.data.checkedNum,
+        todaycheckedNum: this.data.todaycheckedNum,
+        userData: user
       })
     }
   }

@@ -1,27 +1,31 @@
 <template name="userInfoTemplate">
-  <view class="user-info">
-
-    <view class="head">
-
-    </view>
-
-    <view class="user-avatar">
-      <open-data type="userAvatarUrl"></open-data>
-    </view>
-
-    <view class="user-level-money">
-      <text class="user-level">LV 3</text>
-      <text class="user-money">￥ 99</text>
-    </view>
-    <text class="user-exp-text">EXP</text>
-    <progress class="user-exp-progress" percent="50" color="#0060AC" />
+    <view class="user-info">
+        <view class="user-avatar">
+            <open-data type="userAvatarUrl"></open-data>
+        </view>
+        <view class="user-level-money">
+            <text class="user-level">LV {{ user.level }}</text>
+            <text class="user-money">￥ {{ user.money }}</text>
+        </view>
+        <text class="user-exp-text">EXP</text>
+        <progress class="user-exp-progress" percent="50" color="#0060AC" />
   </view>
 </template>
 
 <template name="taskTemplate">
-  <view class="task-item">
-    <checkbox class="item-checkbox" checked="{{ item.status || item.today }}" data-taskid="{{ item.taskid }}" catch:tap="checkboxChange" />
-    <text class="item-title">{{ item.title }}</text>
-    <text class="item-reward">{{ item.time === 'short' ? '短期任务' : '+' + reward[item.difficulty] }}</text>
-  </view>
+    <view class="task-item">
+        <checkbox class="item-checkbox" checked="{{ item.status || item.today }}" data-taskid="{{ item.taskid }}" catch:tap="checkboxChange" />
+        <text class="item-title">{{ item.title }}</text>
+        <text wx:if="{{ !item.status && item.count }}" class="item-count">还需{{ item.count - item.checkcount }}次</text>
+        <text class="item-difficulty">难度：{{ item.difficulty }}</text>
+        <text class="item-reward">{{ item.time === 'short' ? '短期任务' : '+' + reward[item.difficulty] }}</text>
+    </view>
+</template>
+
+<template name="desireTemplate">
+    <view class="desire-item" data-desireid="{{ item.desireid }}" catch:tap="buyDesire">
+        <text class="item-grade">欲望等级{{ item.grade }}</text>
+        <text class="item-title">{{ item.title }}</text>
+        <text class="item-price">-{{ price[item.grade] }}</text>
+    </view>
 </template>

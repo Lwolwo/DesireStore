@@ -15,4 +15,5 @@
     align-items: center;
     color: white;
     font-size: 50rpx;
+    box-shadow: 5rpx 5rpx 15rpx rgb(31, 40, 87);
 }
