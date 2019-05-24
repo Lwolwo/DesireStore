@@ -60,6 +60,18 @@
     color: #3F51B5;
 }
 
+.task-container .task-item .item-count {
+    font-size: 24rpx;
+    color: #656565;
+    margin-right: 20rpx;
+}
+
+.task-container .task-item .item-difficulty {
+    font-size: 24rpx;
+    color: #656565;
+    margin-right: 20rpx;
+}
+
 .task-container .task-item .item-reward {
     font-size: 24rpx;
     color: #656565;

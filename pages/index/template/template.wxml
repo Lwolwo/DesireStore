@@ -14,6 +14,8 @@
     <view class="task-item">
         <checkbox class="item-checkbox" checked="{{ item.status || item.today }}" data-taskid="{{ item.taskid }}" catch:tap="checkboxChange" />
         <text class="item-title">{{ item.title }}</text>
+        <text wx:if="{{ !item.status && item.count }}" class="item-count">还需{{ item.count - item.checkcount }}次</text>
+        <text class="item-difficulty">难度：{{ item.difficulty }}</text>
         <text class="item-reward">{{ item.time === 'short' ? '短期任务' : '+' + reward[item.difficulty] }}</text>
     </view>
 </template>
