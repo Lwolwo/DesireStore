@@ -5,7 +5,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        featureItemData: ["使用方法", "客服中心", "关于我们"]
+        featureItemData: ["流水账", "使用方法", "客服中心", "关于我们"]
     },
 
     /**
