@@ -13,17 +13,25 @@ var taskData = [
     time: 'long',
     frequency: 'daily',
     status: 0,
-    today: 1
+    today: 0,
+    failed: 0,
+    overtime: null,
+    count: null,
+    checkcount: 15
   },
   {
     taskid: 1,
     title: 'FE前端课程',
     typeid: 0,
     difficulty: 1,
-    time: 'long',
+    time: 'short',
     frequency: 'daily',
     status: 0,
-    today: 0
+    today: 0,
+    failed: 0,
+    overtime: '2019-05-24',
+    count: 20,
+    checkcount: 19
   },
   {
     taskid: 2,
@@ -33,7 +41,11 @@ var taskData = [
     time: 'long',
     frequency: 'daily',
     status: 0,
-    today: 1
+    today: 1,
+    failed: 0,
+    overtime: null,
+    count: null,
+    checkcount: 2
   },
   {
     taskid: 3,
@@ -43,7 +55,11 @@ var taskData = [
     time: 'short',
     frequency: 'daily',
     status: 1,
-    today: 0
+    today: 0,
+    failed: 0,
+    overtime: '2019-05-28',
+    count: 21,
+    checkcount: 16
   },
   {
     taskid: 4,
@@ -53,7 +69,11 @@ var taskData = [
     time: null,
     frequency: null,
     status: 0,
-    today: 0
+    today: 0,
+    failed: 0,
+    overtime: '2019-05-25',
+    count: null,
+    checkcount: 0
   },
   {
     taskid: 5,
@@ -63,7 +83,11 @@ var taskData = [
     time: null,
     frequency: null,
     status: 1,
-    today: 0
+    today: 0,
+    failed: 0,
+    overtime: '2019-05-23',
+    count: null,
+    checkcount: 1
   },
   {
     taskid: 6,
@@ -73,7 +97,11 @@ var taskData = [
     time: null,
     frequency: null,
     status: 0,
-    today: 0
+    today: 0,
+    failed: 0,
+    overtime: '2019-05-24',
+    count: null,
+    checkcount: 0
   },
   {
     taskid: 7,
@@ -83,7 +111,11 @@ var taskData = [
     time: null,
     frequency: null,
     status: 0,
-    today: 0
+    today: 0,
+    failed: 0,
+    overtime: '2019-05-24',
+    count: null,
+    checkcount: 0
   },
   {
     taskid: 8,
@@ -93,7 +125,11 @@ var taskData = [
     time: null,
     frequency: null,
     status: 0,
-    today: 0
+    today: 0,
+    failed: 0,
+    overtime: '2019-05-25',
+    count: null,
+    checkcount: 0
   },
 ]
 

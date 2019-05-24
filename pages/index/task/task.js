@@ -72,13 +72,54 @@ Page({
   checkboxChange: function (e) {
     var taskid = e.currentTarget.dataset.taskid
     var typeid = this.data.taskData[taskid].typeid
+    // 主线任务和支线任务都是一次性任务
     if (typeid === 1 || typeid === 2) {
       // TODO 修改任务的状态
       this.data.taskData[taskid].status = !this.data.taskData[taskid].status
-      this.data.taskData[taskid].status ? this.data.checkedNum++ : this.data.checkedNum--
+      this.data.taskData[taskid].status ? this.data.checkedNum++ : this.data.checkedNum-- // 手动更新“已完成”数量，触发视图渲染
       this.setData({
         taskData: this.data.taskData,
         checkedNum: this.data.checkedNum
+      })
+    } 
+    // 日常任务需要计算次数
+    else {
+      // TODO 修改任务状态
+      var task = this.data.taskData[taskid]
+      // 任务处于未完成情况，并且今天未check
+      if (!task.today && !task.status) {
+        task.today = !task.today
+        task.checkcount++
+        if (task.checkcount === task.count) {
+          task.status = !task.status
+          this.data.checkedNum++
+        }
+        else {
+          this.data.todaycheckedNum++
+        }
+      }
+      // 任务处于未完成情况，但是今天已经check
+      else if (task.today && !task.status) {
+        task.today = !task.today
+        task.checkcount--
+        this.data.todaycheckedNum--
+      }
+      // 任务已完成，且是今天刚刚完成的
+      else if (task.today && task.status) {
+        task.status = !task.status
+        this.data.checkedNum--
+        task.today = !task.today
+        task.checkcount--
+        this.data.todaycheckedNum--
+      }
+      // 任务已完成，但是不是今天完成的
+      else {
+        task.status = !task.status
+        this.data.checkedNum--
+      }
+      this.data.taskData[taskid] = task
+      this.setData({
+        taskData: this.data.taskData
       })
     }
   }
