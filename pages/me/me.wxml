@@ -1,24 +1,32 @@
 <import src="./feature-template/feature-template.wxml" />
 
 <view class="top common-border">
-    <image src="../images/head.jpg" />
-    <text>username</text>
+  <!-- 获取到用户的头像 -->
+  <view class="head">
+    <open-data type="userAvatarUrl"></open-data>
+  </view>
+  <!-- 获取到用户的昵称 -->
+  <view class="text">
+    <open-data type="userNickName" lang="zh_CN"></open-data>
+  </view>
+
+
 </view>
 
 <view class="data common-border">
-    <view class="data-level">
-        <image src="../images/exp-color.png" />
-        <text>LV3</text>
-    </view>
-    <view class="bar"></view>
-    <view class="data-money">
-        <image src="../images/money-color.png" />
-        <text>150</text>
-    </view>
+  <view class="data-level">
+    <image src="../images/exp-color.png" />
+    <text>LV3</text>
+  </view>
+  <view class="bar"></view>
+  <view class="data-money">
+    <image src="../images/money-color.png" />
+    <text>150</text>
+  </view>
 </view>
 
 <view class="other common-border">
-<block wx:for="{{featureItemData}}">
+  <block wx:for="{{featureItemData}}">
     <template is="featureItem" data="{{item}}"></template>
-</block>
+  </block>
 </view>

@@ -1,19 +1,27 @@
 <template name="userInfoTemplate">
-    <view class="user-info">
-        <image class="user-avatar" src="http://134.175.125.45/images/head.jpg" />
-        <view class="user-level-money">
-            <text class="user-level">LV 3</text>
-            <text class="user-money">￥ 99</text>
-        </view>
-        <text class="user-exp-text">EXP</text>
-        <progress class="user-exp-progress" percent="50" color="#0060AC" />
+  <view class="user-info">
+
+    <view class="head">
+
     </view>
+
+    <view class="user-avatar">
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+
+    <view class="user-level-money">
+      <text class="user-level">LV 3</text>
+      <text class="user-money">￥ 99</text>
+    </view>
+    <text class="user-exp-text">EXP</text>
+    <progress class="user-exp-progress" percent="50" color="#0060AC" />
+  </view>
 </template>
 
 <template name="taskTemplate">
-    <view class="task-item">
-        <checkbox class="item-checkbox" checked="{{ item.status || item.today }}" data-taskid="{{ item.taskid }}" catch:tap="checkboxChange" />
-        <text class="item-title">{{ item.title }}</text>
-        <text class="item-reward">{{ item.time === 'short' ? '短期任务' : '+' + reward[item.difficulty] }}</text>
-    </view>
+  <view class="task-item">
+    <checkbox class="item-checkbox" checked="{{ item.status || item.today }}" data-taskid="{{ item.taskid }}" catch:tap="checkboxChange" />
+    <text class="item-title">{{ item.title }}</text>
+    <text class="item-reward">{{ item.time === 'short' ? '短期任务' : '+' + reward[item.difficulty] }}</text>
+  </view>
 </template>

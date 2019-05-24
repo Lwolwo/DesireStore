@@ -9,6 +9,10 @@
 .user-info .user-avatar {
     width: 80rpx;
     height: 80rpx;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 2px 2px 3px gainsboro;
+    
 }
 
 .user-info .user-level-money {

@@ -15,17 +15,21 @@ page {
     display: flex;
 }
 
-.top image {
+.top .head {
     width: 70px;
     height: 70px;
     border-radius: 50%;
     margin: 10px;
+    box-shadow: 2px 2px 3px gainsboro;
+    /* 使得border-radius生效 */
+    overflow: hidden;
 }
 
-.top text {
+.top .text {
     display: flex;
     align-items: center;
     margin-left: 10px;
+    font-size: 0.9rem;
 }
 
 .data {

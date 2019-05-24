@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     margin-left: 15rpx;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 .rarrow {
