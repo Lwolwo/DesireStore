@@ -1,13 +1,15 @@
 <template name="userInfoTemplate">
     <view class="user-info">
-        <image class="user-avatar" src="{{ user.avatarsrc }}" />
+        <view class="user-avatar">
+            <open-data type="userAvatarUrl"></open-data>
+        </view>
         <view class="user-level-money">
             <text class="user-level">LV {{ user.level }}</text>
             <text class="user-money">￥ {{ user.money }}</text>
         </view>
         <text class="user-exp-text">EXP</text>
         <progress class="user-exp-progress" percent="50" color="#0060AC" />
-    </view>
+  </view>
 </template>
 
 <template name="taskTemplate">
