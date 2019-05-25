@@ -127,7 +127,7 @@ Page({
         })
     },
 
-    bindPickerChange: function (e) {
+    bindPickerChange: function(e) {
         this.setData({
             index: e.detail.value
         })
@@ -139,9 +139,6 @@ Page({
         let taskcount = self.data.taskcount;
         let grade = self.data.index - 1;
 
-        console.log("taskname", taskname)
-        console.log("taskcount", taskcount)
-        console.log("grade", grade)
 
         if (taskname.length == 0) {
             wx.showToast({
@@ -151,8 +148,7 @@ Page({
                 icon: 'none'
             })
             return
-        }
-        else if (grade === -1) {
+        } else if (grade === -1) {
             wx.showToast({
                 title: '请选择难度',
                 duration: 2000,
@@ -176,8 +172,6 @@ Page({
             allGet: taskcount
         }
 
-        console.log(newdata)
-
         self.data.desireData.push(newdata)
 
 
@@ -186,8 +180,12 @@ Page({
             showModal: false
         })
 
-        
-
+        wx.showToast({
+            title: '添加成功',
+            duration: 2000,
+            mask: true,
+            icon: 'success'
+        })
 
     },
 
