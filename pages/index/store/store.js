@@ -158,11 +158,28 @@ Page({
             return
         }
 
+
+
         if (taskcount.length == 0) {
             taskcount = -1;
         } else {
             taskcount = Number(taskcount);
         }
+
+
+        let re = /^[1-9]+[0-9]*]*$/
+        if (!re.test(String(taskcount))) {
+            wx.showToast({
+                title: '次数必须为正整数！',
+                duration: 2000,
+                mask: true,
+                icon: 'none'
+            })
+            return
+        }
+
+
+        
 
         var newdata = {
             desireid: self.data.desireData.length,
