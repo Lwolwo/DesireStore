@@ -1,6 +1,3 @@
-const taskData = require('../../data/taskData.js')
-const userData = require('../../data/userData.js')
-
 Page({
 
   /**
@@ -22,8 +19,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      taskData: taskData.taskData,
-      userData: userData.userData
+      userData: wx.getStorageSync('userData'),
+      taskData: wx.getStorageSync('taskData')
     })
   },
   // 数据监听器
@@ -93,6 +90,9 @@ Page({
         checkedNum: this.data.checkedNum,
         userData: user
       })
+      // 修改对应Storage
+      wx.setStorageSync('taskData', this.data.taskData)
+      wx.setStorageSync('userData', this.data.userData)
     } 
     // 日常任务需要计算次数
     else {
@@ -150,6 +150,9 @@ Page({
         todaycheckedNum: this.data.todaycheckedNum,
         userData: user
       })
+      // 修改对应Storage
+      wx.setStorageSync('taskData', this.data.taskData)
+      wx.setStorageSync('userData', this.data.userData)
     }
   }
 })
