@@ -19,7 +19,7 @@
         <!-- <text wx:if="{{ !item.status && item.count }}" class="item-count">还需{{ item.count - item.checkcount }}次</text> -->
         <view class="item-difficulty {{ difficultyClasses[item.difficulty] }}">
             <image src="../../images/diff.png" />
-            难度 {{ item.difficulty + 1 }}
+            {{ item.difficulty + 1 }}
         </view>
         <text wx:if="{{ item.time === 'short' }}" class="item-reward">短期</text>
         <text wx:else class="item-reward">+{{ reward[item.difficulty] }}</text>
