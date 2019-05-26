@@ -11,6 +11,7 @@ Page({
     ],
     currentbar: 0,
     reward: [2, 4, 6, 8],
+    difficultyClasses: ['item-difficulty--diff1', 'item-difficulty--diff2', 'item-difficulty--diff3', 'item-difficulty--diff4'],
     taskData: []
   },
 

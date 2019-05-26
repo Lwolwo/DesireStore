@@ -10,7 +10,7 @@
     <view class="task">
         <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
             <block wx:if="{{ item.typeid === currentbar && !item.status && !item.today }}">
-                <template is="taskTemplate" data="{{ item, reward: reward }}"/>
+                <template is="taskTemplate" data="{{ item, reward: reward, difficultyClasses: difficultyClasses }}"/>
             </block>
         </block>
     </view>
@@ -21,7 +21,7 @@
         <view class="task-todaychecked-container">
             <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
                 <block wx:if="{{ item.typeid === currentbar && !item.status && item.today }}">
-                    <template is="taskTemplate" data="{{ item, reward: reward }}" />
+                    <template is="taskTemplate" data="{{ item, reward: reward, difficultyClasses: difficultyClasses }}" />
                 </block>
             </block>
         </view>
@@ -33,7 +33,7 @@
         <view class="task-checked-container">
             <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
                 <block wx:if="{{ item.typeid === currentbar && item.status }}">
-                    <template is="taskTemplate" data="{{ item, reward: reward }}" />
+                    <template is="taskTemplate" data="{{ item, reward: reward, difficultyClasses: difficultyClasses }}" />
                 </block>
             </block>
         </view>
