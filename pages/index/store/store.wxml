@@ -9,12 +9,16 @@
     <block wx:for="{{desireData}}" wx:key="{{item.desireid}}">
         <view class="items" bindtap="buyDesire" data-desireid="{{ item.desireid }}">
             <template is="store-item" data="{{...item}}"></template>
+            <!--
+            <view class="remove" bindtap="delItem">删除 </view>
+
+            -->
         </view>
     </block>
 </view>
 
 <movable-area style="height:82%; width:1rpx; " class="move-area">
-    <movable-view direction="vertical" class="set-button" x="0" y="500" out-of-bounds="true" damping="50" bindtap="clickButton">
+    <movable-view direction="vertical" class="set-button" x="0" y="500" out-of-bounds="true" damping="20" bindtap="clickButton" inertia="true">
         +
     </movable-view>
 </movable-area>

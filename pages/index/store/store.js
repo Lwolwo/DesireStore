@@ -164,25 +164,28 @@ Page({
             taskcount = -1;
         } else {
             taskcount = Number(taskcount);
+            let re = /^[1-9]+[0-9]*]*$/
+            if (!re.test(String(taskcount))) {
+                wx.showToast({
+                    title: '次数必须为正整数！',
+                    duration: 2000,
+                    mask: true,
+                    icon: 'none'
+                })
+                return
+            }
+
+
         }
 
 
-        let re = /^[1-9]+[0-9]*]*$/
-        if (!re.test(String(taskcount))) {
-            wx.showToast({
-                title: '次数必须为正整数！',
-                duration: 2000,
-                mask: true,
-                icon: 'none'
-            })
-            return
-        }
+       
 
-
-        
+        // 取到数组的最后一项的id
+        let id = self.data.desireData[self.data.desireData.length - 1].desireid;
 
         var newdata = {
-            desireid: self.data.desireData.length,
+            desireid: id + 1,
             title: taskname,
             grade: grade,
             get: 0,
