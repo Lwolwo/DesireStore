@@ -66,12 +66,12 @@ App({
     }).get({
       success: res => {
         if (res.data.length) {
-          console.log('[数据库] [查询记录] 成功' + res.data[0])
+          console.log('[数据库] [查询记录] 用户数据查询成功')
           wx.setStorageSync('userData', res.data[0])
           if (this.getUserDataCallback) {
             this.getUserDataCallback()
           }
-          this.onQuery('taskData')
+          this.onQuery('taskData1')
           this.onQuery('desireData')
         }
         else {
@@ -91,31 +91,22 @@ App({
     }).get({
       success: res => {
         // 对taskData进行处理
-        if (table === 'taskData') {
+        if (table === 'taskData1') {
           var taskData = res.data
           taskData.forEach(item => {
             // 如果任务存在DDL，则判断是否过期
-            if (item.overtime) {
-              var ddl = new Date(item.overtime)
+            if (item.due) {
+              var ddl = new Date(item.due)
               var current = new Date(new Date().Format('yyyy-MM-dd'))
               if (!item.status && ddl.getTime() - current.getTime() < 0) {
-                item.failed = true
-                item.failedstr = `${ddl.getMonth() + 1}月${ddl.getDate()}日`
-              }
-            }
-            // 如果任务未过期，则判断任务今天是否完成过了，只有日常任务需要判断
-            if (!item.fail && item.typeid === 0) {
-              var lastwork = new Date(item.lastwork)
-              var current = new Date()
-              // 今天已完成
-              if (current.getTime() - lastwork.getTime() <= 60 * 60 * 24) {
-                item.today = true
+                item.status.expired = true
+                item.expiredstr = `${ddl.getMonth() + 1}月${ddl.getDate()}日`
               }
             }
           })
         }
-        if (table === 'taskData') {
-          wx.setStorageSync(table, taskData)
+        if (table === 'taskData1') {
+          wx.setStorageSync('taskData', taskData)
         }
         else {
           wx.setStorageSync(table, res.data)
@@ -151,10 +142,8 @@ App({
       }
       db.collection('taskData').doc(item._id).update({
         data: {
-          status: item.status,
-          today: item.today,
-          failed: item.failed,
-          checkcount: item.checkcount
+          checkcount: item.checkcount,
+          status: item.status
         },
         success: res => {
           console.log('[数据库] [更新记录] 成功 ' + res)

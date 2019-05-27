@@ -54,28 +54,22 @@
 }
 
 .task-container .task-item .item-describe {
-    margin-left: 10rpx;
+    margin-left: 20rpx;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.task-container .task-item .item-title {
+.task-container .task-item .item-describe .item-title {
     flex: 1;
     font-size: 28rpx;
     color: #3F51B5;
 }
 
-.task-container .task-item .item-failedstr {
-    font-size: 24rpx;
-    color: #FB867A;
-    margin-top: 10rpx;
-}
-
-.task-container .task-item .item-count {
+.task-container .task-item .item-describe .item-count {
     font-size: 24rpx;
     color: #656565;
-    margin-right: 20rpx;
+    margin-top: 10rpx;
 }
 
 .task-container .task-item .item-difficulty {
@@ -88,27 +82,26 @@
     align-items: center;
 }
 
-.task-container .task-item .item-difficulty--diff1 {
+.task-container .task-item .item-difficulty--easy {
     background: rgba(234, 234, 255, 0.9);
 }
-.task-container .task-item .item-difficulty--diff2 {
+.task-container .task-item .item-difficulty--normal {
     background: rgba(199, 199, 255, 0.7);
 }
-.task-container .task-item .item-difficulty--diff3 {
+.task-container .task-item .item-difficulty--medium {
     background: rgba(134, 134, 255, 0.7);
 }
-.task-container .task-item .item-difficulty--diff4 {
+.task-container .task-item .item-difficulty--hard {
     background: rgba(34, 34, 255, 0.6);
 }
 
 .task-container .task-item .item-reward {
     font-size: 24rpx;
     color: #656565;
-    width: 50rpx;
     text-align: right;
 }
 
-.task-container .todaychecked-bar,
+.task-container .expired-bar,
 .task-container .checked-bar {
     font-size: 24rpx;
     color: #656565;
@@ -116,7 +109,7 @@
     padding: 5rpx 0;
 }
 
-.task-container .todaychecked-bar .bar-text,
+.task-container .expired-bar .bar-text
 .task-container .checked-bar .bar-text {
     margin-left: 30rpx;
 }
