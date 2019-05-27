@@ -16,12 +16,12 @@
 <view class="data common-border">
   <view class="data-level">
     <image src="../images/exp-color.png" />
-    <text>LV3</text>
+    <text>LV{{userData.level}}</text>
   </view>
   <view class="bar"></view>
   <view class="data-money">
     <image src="../images/money-color.png" />
-    <text>150</text>
+    <text>{{userData.money}}</text>
   </view>
 </view>
 
