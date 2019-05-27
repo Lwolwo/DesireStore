@@ -331,6 +331,11 @@ Page({
 
             },
             success: res => {
+                this.setData({
+                    taskData: this.data.taskData,
+                    showModal: false
+                })
+
                 // 在返回结果中会包含新创建的记录的 _id
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
                 wx.showToast({
