@@ -1,4 +1,5 @@
-const userData = require('../data/userData.js')
+const app = getApp()
+
 Page({
 
   /**
@@ -7,8 +8,23 @@ Page({
   data: {
   },
   onLoad: function (options) {
+    if (wx.getStorageSync('userData')) {
+      this.setData({
+        userData: wx.getStorageSync('userData')
+      })
+    }
+    else {
+      app.getUserDataCallback = () => {
+        this.setData({
+          userData: wx.getStorageSync('userData')
+        })
+      }
+    }
+    
+  },
+  onShow: function (options) {
     this.setData({
-      userData: userData.userData
+      userData: wx.getStorageSync('userData')
     })
   },
   goTask: function () {

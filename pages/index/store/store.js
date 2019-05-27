@@ -1,6 +1,3 @@
-const desireData = require('../../data/desireData.js')
-const userData = require('../../data/userData.js')
-
 Page({
 
     /**
@@ -21,8 +18,8 @@ Page({
      */
     onLoad: function(options) {
         this.setData({
-            desireData: desireData.desireData,
-            userData: userData.userData
+            desireData: wx.getStorageSync('desireData'),
+            userData: wx.getStorageSync('userData')
         })
     },
 
@@ -62,6 +59,9 @@ Page({
                             desireData: desireArray,
                             userData: user
                         })
+                        // 修改对应的storage
+                        wx.setStorageSync('desireData', self.data.desireData)
+                        wx.setStorageSync('userData', self.data.userData)
 
                     } else {
                         wx.showToast({
