@@ -19,10 +19,30 @@ Page({
         ],
         currentbar: 0,
         reward: [2, 4, 6, 8],
-        difficultyClasses: ['item-difficulty--diff1', 'item-difficulty--diff2', 'item-difficulty--diff3', 'item-difficulty--diff4'],
         taskData: [],
-        todaycheckedShow: true,
-        checkedShow: true
+        checkedShow: true,
+        animationData: {},
+        today: '',
+
+        addTaskData: {
+            taskname: '',
+            taskcount: '',
+            indexType: 0,
+            type: ['请选择任务类型', '日常任务', '主线任务', '支线任务'],
+            indexDiff: 0,
+            difficulty: ['请选择任务难度', '简单', '普通', '中等', '困难'],
+            due: '',
+            checkcount: 0,
+            lastwork: null,
+
+            status: {
+                finished: false,
+                expired: false,
+                today: false,
+            }
+
+
+        }
     },
 
     /**
@@ -30,9 +50,18 @@ Page({
      */
     onLoad: function(options) {
         this.setData({
+            today: (new Date()).Format('yyyy-MM-dd'),
             userData: wx.getStorageSync('userData'),
             taskData: wx.getStorageSync('taskData')
         })
+    },
+    onShow: function() {
+        const animation = wx.createAnimation({
+            duration: 1000,
+            timingFunction: 'ease',
+        })
+
+        this.animation = animation
     },
     // 数据监听器
     watch: {
@@ -42,31 +71,31 @@ Page({
                     this.setData({
                         reward: [2, 4, 6, 8]
                     });
-                    break
+                    break // 日常任务
                 case 1:
                     this.setData({
                         reward: [2, 4, 6, 8]
                     });
-                    break
+                    break // 主线任务
                 case 2:
                     this.setData({
                         reward: [1, 3, 5, 7]
                     });
-                    break
+                    break // 支线任务
             }
         }
     },
     // 计算属性
     computed: {
-        todaycheckedNum: {
+        expiredNum: {
             require: ['taskData', 'currentbar'],
             fn({
                 taskData,
                 currentbar
             }) {
                 var result = 0
-                taskData.map(function(item) {
-                    if (item.typeid === currentbar && !item.status && item.today) {
+                taskData.forEach(item => {
+                    if (item.typeid === currentbar && item.status.expired) {
                         result++
                     }
                 })
@@ -80,34 +109,14 @@ Page({
                 currentbar
             }) {
                 var result = 0
-                taskData.map(function(item) {
-                    if (item.typeid === currentbar && item.status) {
-                        result++
-                    }
-                })
-                return result
-            }
-        },
-        expiredNum: {
-            require: ['taskData', 'currentbar'],
-            fn({
-                taskData,
-                currentbar
-            }) {
-                var result = 0
                 taskData.forEach(item => {
-                    if (item.typeid === currentbar && item.failed && !item.status) {
+                    if (item.typeid === currentbar && item.status.finished) {
                         result++
                     }
                 })
                 return result
             }
         }
-    },
-    todaycheckedShowChange: function() {
-        this.setData({
-            todaycheckedShow: !this.data.todaycheckedShow
-        })
     },
     checkedShowChange: function() {
         this.setData({
@@ -123,104 +132,213 @@ Page({
     },
     // 复选框选中事件
     checkboxChange: function(e) {
-        var taskid = e.currentTarget.dataset.taskid
-        var typeid = this.data.taskData[taskid].typeid
+        var taskindex = e.currentTarget.dataset.taskindex
         var user = this.data.userData
-        // 主线任务和支线任务都是一次性任务
-        if (typeid === 1 || typeid === 2) {
-            // TODO 修改任务的状态
-            this.data.taskData[taskid].status = !this.data.taskData[taskid].status
-            this.data.taskData[taskid].status ? this.data.checkedNum++ : this.data.checkedNum-- // 手动更新“已完成”数量，触发视图渲染
-                if (this.data.taskData[taskid].failed) {
-                    this.data.taskData[taskid].status ? this.data.expiredNum-- : this.data.expiredNum++ // 手动更新“已过期”数量，触发视图渲染
-                }
-            var money = 0
-            if (this.data.taskData[taskid].status) {
-                money = this.data.reward[this.data.taskData[taskid].difficulty]
-            } else {
-                money = -this.data.reward[this.data.taskData[taskid].difficulty]
-            }
-            user.money += money
-            this.setData({
-                taskData: this.data.taskData,
-                checkedNum: this.data.checkedNum,
-                expiredNum: this.data.expiredNum,
-                userData: user
-            })
-            // 修改对应Storage
-            wx.setStorageSync('taskData', this.data.taskData)
-            wx.setStorageSync('userData', this.data.userData)
+        var task = this.data.taskData
+        var item = task[taskindex]
+
+        // 处理任务次数逻辑
+        item.checkcount++
+            item.status.checked = true
+        if (item.checkcount === item.count) {
+            item.status.finished = true
         }
-        // 日常任务需要计算次数
-        else {
-            // TODO 修改任务状态
-            var task = this.data.taskData[taskid]
-            var user = this.data.userData
-            var money = 0
-            // 任务处于未完成情况，并且今天未check
-            if (!task.today && !task.status) {
-                task.today = !task.today
-                task.checkcount++
-                    // 今天check后，任务达成
-                    if (task.checkcount === task.count) {
-                        task.status = !task.status
-                        this.data.checkedNum++
-                            // 短期任务完成需要一次性加￥
-                            money = this.data.reward[task.difficulty] * task.count
-                    }
-                // 今天check后，任务还未完成
-                else {
-                    this.data.todaycheckedNum++
-                        if (task.time === 'long') {
-                            money = this.data.reward[task.difficulty]
-                        }
-                }
-            }
-            // 任务处于未完成情况，但是今天已经check
-            else if (task.today && !task.status) {
-                task.today = !task.today
-                task.checkcount--
-                    this.data.todaycheckedNum--
-                    if (task.time === 'long') {
-                        money = -this.data.reward[task.difficulty]
-                    }
-            }
-            // 任务已完成，且是今天刚刚完成的
-            else if (task.today && task.status) {
-                task.status = !task.status
-                this.data.checkedNum--
-                    task.today = !task.today
-                task.checkcount--
-                    money = -this.data.reward[task.difficulty] * task.count
-            }
-            // 任务已完成，但是不是今天完成的
-            else {
-                task.status = !task.status
-                this.data.checkedNum--
-                    money = -this.data.reward[task.difficulty] * task.count
-            }
-            this.data.taskData[taskid] = task
-            user.money += money
-            this.setData({
-                taskData: this.data.taskData,
-                checkedNum: this.data.checkedNum,
-                expiredNum: this.data.expiredNum,
-                userData: user
-            })
-            // 修改对应Storage
-            wx.setStorageSync('taskData', this.data.taskData)
-            wx.setStorageSync('userData', this.data.userData)
-        }
-    },
-    clickButton() {
+        task[taskindex] = item
+
+        // 处理任务奖励逻辑
+        var money = 0
+        money = this.data.reward[item.difficulty]
+        user.money += money
+
+        // 修改数据，渲染列表
         this.setData({
+            userData: user,
+            taskData: task
+        })
+
+        // 处理复选框动画
+        this.animation.opacity(0.2).step()
+        this.setData({
+            animationData: this.animation.export()
+        })
+
+        // 修改对应Storage
+        wx.setStorageSync('taskData', this.data.taskData)
+        wx.setStorageSync('userData', this.data.userData)
+    },
+
+    clickButton() {
+        var data = {
+            taskname: '',
+            taskcount: '',
+            indexType: 0,
+            type: ['请选择任务类型', '日常任务', '主线任务', '支线任务'],
+            indexDiff: 0,
+            difficulty: ['请选择任务难度', '简单', '普通', '中等', '困难'],
+            due: '',
+            checkcount: 0,
+            lastwork: null,
+
+            status: {
+                finished: false,
+                expired: false,
+                today: false,
+            }
+        }
+
+        this.setData({
+            addTaskData: data,
             showModal: true,
         })
     },
+
     close_mask: function() {
         this.setData({
             showModal: false
         })
+    },
+
+    getTaskName(e) {
+        var val = e.detail.value
+        this.setData({
+            'addTaskData.taskname': val
+        })
+
+    },
+
+    getTaskCount(e) {
+        var val = e.detail.value
+        this.setData({
+            'addTaskData.taskcount': val
+        })
+    },
+
+    bindPickerChangeType(e) {
+        var str = 'addTaskData.indexType'
+        this.setData({
+            [str]: e.detail.value
+        })
+
+    },
+
+    bindPickerChangeDiff(e) {
+        var str = 'addTaskData.indexDiff'
+        this.setData({
+            [str]: e.detail.value
+        })
+    },
+
+    bindDateChange(e) {
+        var str = 'addTaskData.due'
+        this.setData({
+            [str]: e.detail.value
+        })
+    },
+
+    addTask() {
+        var data = this.data.addTaskData
+        console.log(data)
+
+
+        // 错误检测
+        if (data.taskname.length == 0) {
+            wx.showToast({
+                title: '请输入任务名',
+                duration: 2000,
+                mask: true,
+                icon: 'none'
+            })
+            return
+        } else if (data.indexType === 0) {
+            wx.showToast({
+                title: '请选择任务类型',
+                duration: 2000,
+                mask: true,
+                icon: 'none'
+            })
+            return
+        } else if (data.indexDiff === 0) {
+            wx.showToast({
+                title: '请选择任务难度',
+                duration: 2000,
+                mask: true,
+                icon: 'none'
+            })
+            return
+        }
+
+        console.log('taskcount', data.taskcount)
+
+        if (data.taskcount.length === 0) {
+            if (data.indexType === 0) {
+                data.taskcount = 0;
+            } else if (data.indexType === 1 || data.indexType === 2) {
+                data.taskcount = 1;
+            }
+
+        } else {
+            data.taskcount = Number(data.taskcount);
+            let re = /^[1-9]+[0-9]*]*$/
+            if (!re.test(String(data.taskcount))) {
+                wx.showToast({
+                    title: '次数必须为正整数！',
+                    duration: 2000,
+                    mask: true,
+                    icon: 'none'
+                })
+                return
+            }
+        }
+
+        if (data.due.length == 0) {
+            data.due = null;
+        }
+
+        const db = wx.cloud.database()
+        db.collection('taskData1').add({
+            data: {
+
+                title: data.taskname,
+                typeid: data.indexType - 1,
+                difficulty: data.indexDiff - 1,
+                due: data.due,
+                count: data.taskcount,
+                checkcount: 0,
+
+                lastwork: null,
+                status: {
+                    finished: false,
+                    expired: false,
+                    today: false,
+                }
+
+            },
+            success: res => {
+                this.setData({
+                    taskData: this.data.taskData,
+                    showModal: false
+                })
+
+                // 在返回结果中会包含新创建的记录的 _id
+                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+                wx.showToast({
+                    title: '新增任务成功',
+                })
+
+            },
+            fail: err => {
+                wx.showToast({
+                    icon: 'none',
+                    title: '新增任务失败'
+                })
+                console.error('[数据库] [新增记录] 失败：', err)
+                return
+            }
+        })
+
+
+
     }
+
 
 })
