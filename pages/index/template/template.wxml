@@ -17,7 +17,7 @@
         <checkbox disabled="{{ item.status.finished || item.status.checked }}" class="item-checkbox {{ item.status.checked ? 'item-checkbox--checked' : '' }}" checked="{{ item.status.checked || item.status.finished }}" data-taskindex="{{ index }}" catch:tap="checkboxChange" />
         <view class="item-describe">
             <text class="item-title">{{ item.title }}</text>
-            <text wx:if="{{ item.typeid === 0 }}" class="item-count">{{ item.checkcount }}/{{ item.count }}</text>
+            <text wx:if="{{ item.typeid === 0 }}" class="item-count">{{ item.checkcount }}/{{ item.count === 0 ? '∞' : item.count }}</text>
         </view>
         <text wx:if="{{ item.difficulty === 0}}" class="item-difficulty item-difficulty--easy">简单</text>
         <text wx:elif="{{ item.difficulty === 1}}" class="item-difficulty item-difficulty--normal">普通</text>

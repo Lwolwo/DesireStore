@@ -89,7 +89,7 @@ Page({
     item.checkcount++
     item.status.today = true
     item.status.checked = true
-    if (item.checkcount === item.count) {
+    if (item.checkcount === item.count && item.count !== 0) {
       item.status.finished = true
     }
     task[taskindex] = item
@@ -113,7 +113,7 @@ Page({
     })
 
     // 如果日常未完成则取消复选框勾选
-    if (item.checkcount <= item.count) {
+    if (item.checkcount <= item.count || item.count === 0) {
       setTimeout(() => {
         item.status.checked = false
         task[taskindex] = item
