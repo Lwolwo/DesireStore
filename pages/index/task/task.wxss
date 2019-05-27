@@ -69,7 +69,7 @@
     background: #3F51B5;
 }
 
-.task-container .task-item--finished .wx-checkbox-input-checked::before {
+.task-container .task-item--daily.task-item--finished .wx-checkbox-input-checked::before {
     color: transparent;
     width: 30rpx;
     height: 30rpx;
@@ -148,7 +148,7 @@
     padding: 5rpx 0;
 }
 
-.task-container .expired-bar .bar-text
+.task-container .expired-bar .bar-text,
 .task-container .checked-bar .bar-text {
     margin-left: 30rpx;
 }
