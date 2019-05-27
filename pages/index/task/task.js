@@ -59,6 +59,18 @@ Page({
         })
         return result
       }
+    },
+    expiredNum: {
+      require: ['taskData', 'currentbar'],
+      fn({ taskData, currentbar}) {
+        var result = 0
+        taskData.forEach( item => {
+          if (item.typeid === currentbar && item.failed) {
+            result++
+          }
+        })
+        return result
+      }
     }
   },
   // 切换tab事件
@@ -78,6 +90,9 @@ Page({
       // TODO 修改任务的状态
       this.data.taskData[taskid].status = !this.data.taskData[taskid].status
       this.data.taskData[taskid].status ? this.data.checkedNum++ : this.data.checkedNum-- // 手动更新“已完成”数量，触发视图渲染
+      if (this.data.taskData[taskid].failed) {
+        this.data.taskData[taskid].status ? this.data.expiredNum-- : this.data.expiredNum++ // 手动更新“已过期”数量，触发视图渲染
+      }
       var money = 0
       if (this.data.taskData[taskid].status) {
         money = this.data.reward[this.data.taskData[taskid].difficulty]
@@ -89,6 +104,7 @@ Page({
       this.setData({
         taskData: this.data.taskData,
         checkedNum: this.data.checkedNum,
+        expiredNum: this.data.expiredNum,
         userData: user
       })
       // 修改对应Storage
@@ -148,7 +164,7 @@ Page({
       this.setData({
         taskData: this.data.taskData,
         checkedNum: this.data.checkedNum,
-        todaycheckedNum: this.data.todaycheckedNum,
+        expiredNum: this.data.expiredNum,
         userData: user
       })
       // 修改对应Storage

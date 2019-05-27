@@ -1,5 +1,30 @@
 const { patchPage, patchComponent } = require('./pages/util/miniprogrampatch.js')
 
+// 对Date的扩展，将 Date 转化为指定格式的String 
+// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
+// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) 
+// 例子： 
+// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
+// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
+Date.prototype.Format = function(fmt) 
+{ //author: meizz 
+  var o = { 
+    "M+" : this.getMonth()+1,                 //月份 
+    "d+" : this.getDate(),                    //日 
+    "h+" : this.getHours(),                   //小时 
+    "m+" : this.getMinutes(),                 //分 
+    "s+" : this.getSeconds(),                 //秒 
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+    "S"  : this.getMilliseconds()             //毫秒 
+  }; 
+  if(/(y+)/.test(fmt)) 
+    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+  for(var k in o) 
+    if(new RegExp("("+ k +")").test(fmt)) 
+  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length))); 
+  return fmt; 
+}
+
 Page = patchPage(Page)
 Component = patchComponent(Component)
 
@@ -65,7 +90,36 @@ App({
       _openid: this.globalData.openid
     }).get({
       success: res => {
-        wx.setStorageSync(table, res.data)
+        // 对taskData进行处理
+        if (table === 'taskData') {
+          var taskData = res.data
+          taskData.forEach(item => {
+            // 如果任务存在DDL，则判断是否过期
+            if (item.overtime) {
+              var ddl = new Date(item.overtime)
+              var current = new Date(new Date().Format('yyyy-MM-dd'))
+              if (!item.status && ddl.getTime() - current.getTime() < 0) {
+                item.failed = true
+                item.failedstr = `${ddl.getMonth() + 1}月${ddl.getDate()}日`
+              }
+            }
+            // 如果任务未过期，则判断任务今天是否完成过了，只有日常任务需要判断
+            if (!item.fail && item.typeid === 0) {
+              var lastwork = new Date(item.lastwork)
+              var current = new Date()
+              // 今天已完成
+              if (current.getTime() - lastwork.getTime() <= 60 * 60 * 24) {
+                item.today = true
+              }
+            }
+          })
+        }
+        if (table === 'taskData') {
+          wx.setStorageSync(table, taskData)
+        }
+        else {
+          wx.setStorageSync(table, res.data)
+        }
       },
       fail: err => {
         console.error('[数据库] [查新记录] 失败', err)
@@ -92,6 +146,9 @@ App({
     // 更新taskData
     var taskData = wx.getStorageSync('taskData')
     taskData.forEach(item => {
+      if (item.today) {
+        task.lastwork = new Date().Format('yyyy-MM-dd')
+      }
       db.collection('taskData').doc(item._id).update({
         data: {
           status: item.status,

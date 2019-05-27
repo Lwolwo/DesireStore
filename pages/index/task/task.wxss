@@ -53,11 +53,23 @@
     font-size: 30rpx;
 }
 
+.task-container .task-item .item-describe {
+    margin-left: 10rpx;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
 .task-container .task-item .item-title {
     flex: 1;
-    margin-left: 10rpx;
     font-size: 28rpx;
     color: #3F51B5;
+}
+
+.task-container .task-item .item-failedstr {
+    font-size: 24rpx;
+    color: #FB867A;
+    margin-top: 10rpx;
 }
 
 .task-container .task-item .item-count {
@@ -66,34 +78,27 @@
     margin-right: 20rpx;
 }
 
-.task-container .task-item .item-difficulty image {
-    width: 25rpx;
-    height: 30rpx;
-    margin-right: 5rpx;
-}
-
 .task-container .task-item .item-difficulty {
     font-size: 24rpx;
-    color: white;
+    color: black;
     margin-right: 20rpx;
     background: #f2f2f2;
     border-radius: 10rpx;
     padding: 5rpx 15rpx;
-    display: flex;
     align-items: center;
 }
 
 .task-container .task-item .item-difficulty--diff1 {
-    background: #FBCECA;
+    background: rgba(234, 234, 255, 0.9);
 }
 .task-container .task-item .item-difficulty--diff2 {
-    background: #FB867A;
+    background: rgba(199, 199, 255, 0.7);
 }
 .task-container .task-item .item-difficulty--diff3 {
-    background: #E12714;
+    background: rgba(134, 134, 255, 0.7);
 }
 .task-container .task-item .item-difficulty--diff4 {
-    background: #9E1608;
+    background: rgba(34, 34, 255, 0.6);
 }
 
 .task-container .task-item .item-reward {

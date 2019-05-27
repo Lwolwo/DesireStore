@@ -9,16 +9,28 @@
     </view>
     <view class="task">
         <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
-            <block wx:if="{{ item.typeid === currentbar && !item.status && !item.today }}">
+            <block wx:if="{{ item.typeid === currentbar && !item.status && !item.today && !item.failed }}">
                 <template is="taskTemplate" data="{{ item, reward: reward, difficultyClasses: difficultyClasses }}"/>
             </block>
         </block>
+    </view>
+    <view wx:if="{{ expiredNum }}" class="task-todaychecked">
+        <view class="todaychecked-bar">
+            <text class="bar-text">已过期</text>
+        </view>
+        <view class="task-todaychecked-container">
+            <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
+                <block wx:if="{{ item.typeid === currentbar && !item.status && item.failed }}">
+                    <template is="taskTemplate" data="{{ item, reward: reward, difficultyClasses: difficultyClasses }}" />
+                </block>
+            </block>
+        </view>
     </view>
     <view wx:if="{{ todaycheckedNum }}" class="task-todaychecked">
         <view class="todaychecked-bar">
             <text class="bar-text">今日已完成</text>
         </view>
-        <view class="task-todaychecked-container">
+        <view hidden="{{ todaycheckedShow }}" class="task-todaychecked-container">
             <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
                 <block wx:if="{{ item.typeid === currentbar && !item.status && item.today }}">
                     <template is="taskTemplate" data="{{ item, reward: reward, difficultyClasses: difficultyClasses }}" />
@@ -30,7 +42,7 @@
         <view class="checked-bar">
             <text class="bar-text">已完成</text>
         </view>
-        <view class="task-checked-container">
+        <view hidden="{{}}" class="task-checked-container">
             <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
                 <block wx:if="{{ item.typeid === currentbar && item.status }}">
                     <template is="taskTemplate" data="{{ item, reward: reward, difficultyClasses: difficultyClasses }}" />
