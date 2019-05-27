@@ -27,7 +27,7 @@
         </view>
     </view>
     <view wx:if="{{ todaycheckedNum }}" class="task-todaychecked">
-        <view class="todaychecked-bar">
+        <view class="todaychecked-bar" catch:tap="todaycheckedShowChange">
             <text class="bar-text">今日已完成</text>
         </view>
         <view hidden="{{ todaycheckedShow }}" class="task-todaychecked-container">
@@ -39,10 +39,10 @@
         </view>
     </view>
     <view wx:if="{{ checkedNum }}" class="task-checked">
-        <view class="checked-bar">
+        <view class="checked-bar" catch:tap="checkedShowChange">
             <text class="bar-text">已完成</text>
         </view>
-        <view hidden="{{}}" class="task-checked-container">
+        <view hidden="{{ checkedShow }}" class="task-checked-container">
             <block wx:for="{{ taskData }}" wx:for-item="item" wx:key="{{ item.taskid }}">
                 <block wx:if="{{ item.typeid === currentbar && item.status }}">
                     <template is="taskTemplate" data="{{ item, reward: reward, difficultyClasses: difficultyClasses }}" />

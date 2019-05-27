@@ -12,7 +12,9 @@ Page({
     currentbar: 0,
     reward: [2, 4, 6, 8],
     difficultyClasses: ['item-difficulty--diff1', 'item-difficulty--diff2', 'item-difficulty--diff3', 'item-difficulty--diff4'],
-    taskData: []
+    taskData: [],
+    todaycheckedShow: true,
+    checkedShow: true
   },
 
   /**
@@ -72,6 +74,16 @@ Page({
         return result
       }
     }
+  },
+  todaycheckedShowChange: function () {
+    this.setData({
+      todaycheckedShow: !this.data.todaycheckedShow
+    })
+  },
+  checkedShowChange: function () {
+    this.setData({
+      checkedShow: !this.data.checkedShow
+    })
   },
   // 切换tab事件
   changeTab: function (e) {
