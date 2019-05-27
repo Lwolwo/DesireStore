@@ -53,6 +53,45 @@
     font-size: 30rpx;
 }
 
+.task-container .task-item--daily .wx-checkbox-input {
+    border-radius: 50%;
+}
+
+.task-container .task-item--daily .wx-checkbox-input-checked {
+    background: white;
+}
+
+.task-container .task-item--daily .wx-checkbox-input-checked::before {
+    color: transparent;
+    width: 30rpx;
+    height: 30rpx;
+    border-radius: 50%;
+    background: #3F51B5;
+}
+
+.task-container .task-item--finished .wx-checkbox-input-checked::before {
+    color: transparent;
+    width: 30rpx;
+    height: 30rpx;
+    border-radius: 50%;
+    background: #ccc;
+}
+
+
+.task-container .task-item--daily .item-checkbox--checked {
+    animation: checkbox-shark 1s;
+    animation-delay: 0.2s;
+}
+
+@-webkit-keyframes checkbox-shark {
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .task-container .task-item .item-describe {
     margin-left: 20rpx;
     flex: 1;

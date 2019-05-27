@@ -81,7 +81,6 @@ Page({
   // 复选框选中事件
   checkboxChange: function (e) {
     var taskindex = e.currentTarget.dataset.taskindex
-    console.log(e.currentTarget.dataset.taskindex)
     var user = this.data.userData
     var task = this.data.taskData
     var item = task[taskindex]
@@ -89,6 +88,7 @@ Page({
     // 处理任务次数逻辑
     item.checkcount++
     item.status.today = true
+    item.status.checked = true
     if (item.checkcount === item.count) {
       item.status.finished = true
     }
@@ -99,11 +99,29 @@ Page({
     money = this.data.reward[item.difficulty]
     user.money += money
 
+    // 处理'已完成'列表数量，但如果是日常任务则延迟判断
+    var checkedNum = this.data.checkedNum
+    if (item.status.finished) {
+      checkedNum++
+    }
+
     // 修改数据，渲染列表
     this.setData({
       userData: user,
-      taskData: task
+      taskData: task,
+      checkedNum: checkedNum
     })
+
+    // 如果日常未完成则取消复选框勾选
+    if (item.checkcount <= item.count) {
+      setTimeout(() => {
+        item.status.checked = false
+        task[taskindex] = item
+        this.setData({
+          taskData: task
+        })
+      }, 700);
+    }
 
     // 修改对应Storage
     wx.setStorageSync('taskData', this.data.taskData)

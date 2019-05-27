@@ -13,8 +13,8 @@
 </template>
 
 <template name="taskTemplate">
-    <view class="task-item">
-        <checkbox class="item-checkbox" checked="{{ item.status.finished || item.status.today }}" data-taskindex="{{ index }}" catch:tap="checkboxChange" />
+    <view class="task-item {{ item.typeid === 0 ? 'task-item--daily' : ''}} {{ item.status.finished ? 'task-item--finished' : '' }}">
+        <checkbox disabled="{{ item.status.finished }}" class="item-checkbox {{ item.status.checked ? 'item-checkbox--checked' : '' }}" checked="{{ item.status.checked || item.status.finished }}" data-taskindex="{{ index }}" catch:tap="checkboxChange" />
         <view class="item-describe">
             <text class="item-title">{{ item.title }}</text>
             <text wx:if="{{ item.typeid === 0 }}" class="item-count">{{ item.checkcount }}/{{ item.count }}</text>
