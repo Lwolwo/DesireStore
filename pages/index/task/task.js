@@ -67,7 +67,7 @@ Page({
       fn({ taskData, currentbar}) {
         var result = 0
         taskData.forEach( item => {
-          if (item.typeid === currentbar && item.failed) {
+          if (item.typeid === currentbar && item.failed && !item.status) {
             result++
           }
         })
