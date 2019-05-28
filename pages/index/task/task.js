@@ -23,6 +23,8 @@ Page({
         checkedShow: true,
         animationData: {},
         today: '',
+        taskcountDis: false,     // 次数input禁用控制变量
+        datepickerDis: false,    // 日期选择器禁用控制器
 
         addTaskData: {
             taskname: '',
@@ -227,6 +229,24 @@ Page({
 
     bindPickerChangeType(e) {
         var str = 'addTaskData.indexType'
+        // 如果是日常任务，开启taskcount输入框，禁用时间选择器
+        if (Number(e.detail.value) === 1) {
+            this.setData({
+                "addTaskData.taskcount": '',
+                "addTaskData.due": '无',
+                taskcountDis: false,
+                datepickerDis: true,
+            })
+        }
+        // 不是日常任务，禁用taskcount输入框，开启时间选择器，默认设count为1
+        else if (Number(e.detail.value === 2 || Number(e.detail.value) === 3)) {
+            this.setData({
+                "addTaskData.taskcount": 1,
+                "addTaskData.due": new Date().Format('yyyy-MM-dd'),
+                taskcountDis: true,
+                datepickerDis: false
+            })
+        }
         this.setData({
             [str]: e.detail.value
         })
@@ -282,9 +302,10 @@ Page({
         console.log('taskcount', data.taskcount)
 
         if (data.taskcount.length === 0) {
-            if (data.indexType === 0) {
+            // indexType为1才是‘日常任务’，并且data.indexType的类型是string
+            if (Number(data.indexType) === 1) {
                 data.taskcount = 0;
-            } else if (data.indexType === 1 || data.indexType === 2) {
+            } else if (Number(data.indexType) === 2 || Number(data.indexType) === 3) {
                 data.taskcount = 1;
             }
 

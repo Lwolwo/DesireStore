@@ -46,9 +46,9 @@
     <view class="modalDlg" wx:if="{{showModal}}">
         <view class='close-mask' bindtap="close_mask">×</view>
         <view class="content">
-            <input class='inputtext' type='text' placeholder='请输入任务名' value='{{addTask.taskname}}' bindinput="getTaskName"></input>
+            <input class='inputtext' type='text' placeholder='请输入任务名' value='{{addTaskData.taskname}}' bindinput="getTaskName"></input>
             
-            <input class='inputtext' type='text' placeholder='请输入次数' value='{{addTask.taskcount}}' bindinput="getTaskCount"></input>
+            <input class='inputtext' disabled="{{ taskcountDis }}" type='text' placeholder='请输入次数(默认无限次)' value='{{addTaskData.taskcount}}' bindinput="getTaskCount"></input>
 
             
             <!-- 选择任务类型 -->
@@ -67,7 +67,7 @@
 
             <!-- 任务截止时间 -->
             <view class="picker-wrapper">
-                <picker mode="date" value="{{addTaskData.due}}" start="{{today}}" end="9999-12-31" bindchange="bindDateChange">
+                <picker mode="date" value="{{addTaskData.due}}" disabled="{{ datepickerDis }}" start="{{today}}" end="9999-12-31" bindchange="bindDateChange">
                     <view class="picker">{{addTaskData.due}}</view>
                 </picker>
             </view>
