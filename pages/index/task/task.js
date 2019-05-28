@@ -172,12 +172,11 @@ Page({
             this.setData({
               taskData: task
             })
+            // 修改对应Storage
+            wx.setStorageSync('taskData', this.data.taskData)
+            wx.setStorageSync('userData', this.data.userData)
           }, 700);
         }
-    
-        // 修改对应Storage
-        wx.setStorageSync('taskData', this.data.taskData)
-        wx.setStorageSync('userData', this.data.userData)
     },
 
     clickButton() {
