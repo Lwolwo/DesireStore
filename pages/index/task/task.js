@@ -350,7 +350,7 @@ Page({
         }
 
         const db = wx.cloud.database()
-        db.collection('taskData1').add({
+        db.collection('taskData').add({
             data: {
 
                 title: data.taskname,

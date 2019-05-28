@@ -71,7 +71,7 @@ App({
           if (this.getUserDataCallback) {
             this.getUserDataCallback()
           }
-          this.onQuery('taskData1')
+          this.onQuery('taskData')
           this.onQuery('desireData')
         }
         else {
@@ -91,7 +91,7 @@ App({
     }).get({
       success: res => {
         // 对taskData进行处理
-        if (table === 'taskData1') {
+        if (table === 'taskData') {
           var taskData = res.data
           taskData.forEach(item => {
             // 如果任务存在DDL，则判断是否过期
@@ -105,7 +105,7 @@ App({
             }
           })
         }
-        if (table === 'taskData1') {
+        if (table === 'taskData') {
           wx.setStorageSync('taskData', taskData)
         }
         else {

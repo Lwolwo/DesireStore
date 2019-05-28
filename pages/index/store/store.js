@@ -239,19 +239,31 @@ Page({
 
         let index = self.findItem(desireArray, desireid)
         let item = self.data.desireData[index]
-        
+
+        const db = wx.cloud.database()
+
         wx.showModal({
             title: '提示',
             content: '确定要删除欲望吗？',
             success: function(res) {
                 if (res.confirm) {
                     desireArray.splice(index, 1);
+                    // 删除数据库对应的任务
+                    db.collection('desireData').doc(item._id).remove({
+                    success: res => {
+                        console.log('[数据库] [删除记录] 成功')
+                    },
+                    fail: err => {
+                        console.error('[数据库] [删除记录] 失败', err)
+                    }
+                  })
                 } else if (res.cancel) {
                     return false;
                 }
                 self.setData({
                     desireData: self.data.desireData
                 })
+                wx.setStorageSync('desireData', self.data.desireData)
             }
         })
     }
