@@ -179,7 +179,7 @@ Page({
         }
 
 
-       
+
 
         // 取到数组的最后一项的id
         let id = self.data.desireData[self.data.desireData.length - 1].desireid;
@@ -229,7 +229,33 @@ Page({
                 return i;
         }
         return -1;
+    },
+
+    deleteDesire(e) {
+
+        var desireid = e.currentTarget.dataset.desireid
+        var self = this
+        var desireArray = this.data.desireData
+
+        let index = self.findItem(desireArray, desireid)
+        let item = self.data.desireData[index]
+        
+        wx.showModal({
+            title: '提示',
+            content: '确定要删除欲望吗？',
+            success: function(res) {
+                if (res.confirm) {
+                    desireArray.splice(index, 1);
+                } else if (res.cancel) {
+                    return false;
+                }
+                self.setData({
+                    desireData: self.data.desireData
+                })
+            }
+        })
     }
+
 
 
 })
