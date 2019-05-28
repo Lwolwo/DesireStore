@@ -84,7 +84,7 @@
 .picker {
     color: #aaa;
     text-align: center;
-    padding-top: 30rpx;
+    padding: 25rpx;
     font-size: 30rpx;
     line-height: 30rpx;
 }

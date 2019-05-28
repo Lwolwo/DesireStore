@@ -187,7 +187,7 @@ Page({
             type: ['请选择任务类型', '日常任务', '主线任务', '支线任务'],
             indexDiff: 0,
             difficulty: ['请选择任务难度', '简单', '普通', '中等', '困难'],
-            due: '',
+            due: new Date().Format('yyyy-MM-dd'),
             checkcount: 0,
             lastwork: null,
 
@@ -304,6 +304,11 @@ Page({
 
         if (data.due.length == 0) {
             data.due = null;
+        }
+
+        // 把日常任务的due字段置为null
+        if (data.typeid === 0) {
+            data.due = null
         }
 
         // 构造新任务对象
