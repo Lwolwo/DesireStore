@@ -18,9 +18,7 @@
 </view>
 
 <movable-area style="height:82%; width:1rpx; " class="move-area">
-    <movable-view direction="vertical" class="set-button" x="0" y="500" out-of-bounds="true" damping="20" bindtap="clickButton" inertia="true">
-        +
-    </movable-view>
+    <movable-view direction="vertical" class="set-button" x="0" y="500" out-of-bounds="true" damping="20" bindtap="clickButton" inertia="true">+</movable-view>
 </movable-area>
 
 
