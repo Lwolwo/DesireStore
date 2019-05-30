@@ -63,6 +63,23 @@ Page({
                         wx.setStorageSync('desireData', self.data.desireData)
                         wx.setStorageSync('userData', self.data.userData)
 
+                        // 添加支出记录
+                        var option = {
+                            type: 1,
+                            key: item._id,
+                            title: item.title,
+                            time: new Date().Format('yyyy-MM-dd hh:mm:ss'),
+                            money: self.data.price[item.grade]
+                        }
+                        var recordData = wx.getStorageSync('recordData')
+                        if (recordData) {
+                            recordData.push(option)
+                        }
+                        else {
+                            recordData = []
+                            recordData.push(option)
+                        }
+                        wx.setStorageSync('recordData', recordData)
                     } else {
                         wx.showToast({
                             title: '￥余额不足，要继续努力才可以哦！',

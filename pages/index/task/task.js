@@ -187,6 +187,24 @@ Page({
                 wx.setStorageSync('userData', this.data.userData)
             }, 700);
         }
+
+        // 添加收入记录
+        var option = {
+            tpye: 0,
+            key: item._id,
+            title: item.title,
+            time: new Date().Format('yyyy-MM-dd hh:mm:ss'),
+            money: this.data.reward[item.typeid]
+        }
+        var recordData = wx.getStorageSync('recordData')
+        if (recordData) {
+            recordData.push(option)
+        }
+        else {
+            recordData = []
+            recordData.push(option)
+        }
+        wx.setStorageSync('recordData', recordData)
     },
 
     clickButton() {
