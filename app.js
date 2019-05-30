@@ -98,7 +98,7 @@ App({
             if (item.due) {
               var ddl = new Date(item.due)
               var current = new Date(new Date().Format('yyyy-MM-dd'))
-              if (!item.status && ddl.getTime() - current.getTime() < 0) {
+              if (!item.status.finished && ddl.getTime() - current.getTime() < 0) {
                 item.status.expired = true
                 item.expiredstr = `${ddl.getMonth() + 1}月${ddl.getDate()}日`
               }

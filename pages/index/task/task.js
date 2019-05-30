@@ -144,7 +144,7 @@ Page({
         item.status.today = true
         item.status.checked = true
         if (item.checkcount === item.count && item.count !== 0) {
-          item.status.finished = true
+            item.status.finished = true
         }
         task[taskindex] = item
     
@@ -153,31 +153,39 @@ Page({
         money = this.data.reward[item.difficulty]
         user.money += money
     
-        // 处理'已完成'列表数量，但如果是日常任务则延迟判断
+        // 处理'已完成'列表数量
         var checkedNum = this.data.checkedNum
         if (item.status.finished) {
-          checkedNum++
+            checkedNum++
+        }
+
+        // 如果已过期的任务完成后，'已过期'的数量需要修改
+        var expiredNum = this.data.expiredNum
+        if (item.status.expired && item.status.finished) {
+            item.status.expired = false
+            expiredNum--
         }
     
         // 修改数据，渲染列表
         this.setData({
-          userData: user,
-          taskData: task,
-          checkedNum: checkedNum
+            userData: user,
+            taskData: task,
+            checkedNum: checkedNum,
+            expiredNum: expiredNum
         })
     
         // 如果日常未完成则取消复选框勾选
         if (item.checkcount <= item.count || item.count === 0) {
-          setTimeout(() => {
-            item.status.checked = false
-            task[taskindex] = item
-            this.setData({
-              taskData: task
-            })
-            // 修改对应Storage
-            wx.setStorageSync('taskData', this.data.taskData)
-            wx.setStorageSync('userData', this.data.userData)
-          }, 700);
+            setTimeout(() => {
+                item.status.checked = false
+                task[taskindex] = item
+                this.setData({
+                taskData: task
+                })
+                // 修改对应Storage
+                wx.setStorageSync('taskData', this.data.taskData)
+                wx.setStorageSync('userData', this.data.userData)
+            }, 700);
         }
     },
 
