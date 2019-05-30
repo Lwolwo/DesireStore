@@ -13,6 +13,7 @@ Page({
       this.setData({
         userData: wx.getStorageSync('userData')
       })
+        this.getExp()
     }
     else {
       app.getUserDataCallback = () => {
@@ -21,7 +22,6 @@ Page({
         })
       }
     }
-      this.getExp()
     
   },
   onShow: function (options) {
