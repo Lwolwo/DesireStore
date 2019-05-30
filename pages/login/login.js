@@ -15,6 +15,7 @@ Page({
       data: {
         level: 0,
         money: 0,
+        exp: 0,
         username: app.globalData.userInfo.nickName
       },
       success: res => {

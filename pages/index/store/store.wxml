@@ -2,7 +2,7 @@
 <import src="./store-item/store-item.wxml" />
 
 <view class="store-container">
-    <template is="userInfoTemplate" data="{{ user:userData }}" />
+    <template is="userInfoTemplate" data="{{ user:userData, percent: percent }}" />
 </view>
 
 <view class="item">

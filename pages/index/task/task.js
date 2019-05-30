@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
 
     /**
@@ -56,6 +57,7 @@ Page({
             userData: wx.getStorageSync('userData'),
             taskData: wx.getStorageSync('taskData')
         })
+        this.getExp()
     },
     onShow: function() {
         const animation = wx.createAnimation({
@@ -64,6 +66,7 @@ Page({
         })
 
         this.animation = animation
+        this.getExp()
     },
     // 数据监听器
     watch: {
@@ -152,6 +155,11 @@ Page({
         var money = 0
         money = this.data.reward[item.difficulty]
         user.money += money
+
+        // 增加经验
+        user.exp += money;
+        this.getExp()
+        
     
         // 处理'已完成'列表数量
         var checkedNum = this.data.checkedNum
@@ -428,6 +436,24 @@ Page({
                 console.error('[数据库] [新增记录] 失败：', err)
                 return
             }
+        })
+    }, 
+    getExp() {
+        var level = this.data.userData.level
+        var myexp = this.data.userData.exp
+        var exp = app.globalData.levelExp[level + 1]
+
+        if (myexp > exp) {
+            myexp -= exp;
+            level++;
+        }
+
+        this.data.userData.level = level
+        this.data.userData.exp = myexp
+
+        this.setData({
+            percent: ((myexp / exp) * 100),
+            userData: this.data.userData
         })
     }
 })

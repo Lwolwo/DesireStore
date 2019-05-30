@@ -8,7 +8,7 @@
             <text class="user-money">￥ {{ user.money }}</text>
         </view>
         <text class="user-exp-text">EXP</text>
-        <progress class="user-exp-progress" percent="50" color="#0060AC" />
+        <progress class="user-exp-progress" percent="{{percent}}" color="#0060AC" />
   </view>
 </template>
 

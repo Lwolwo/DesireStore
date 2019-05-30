@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
 
     /**
@@ -21,6 +22,7 @@ Page({
             desireData: wx.getStorageSync('desireData'),
             userData: wx.getStorageSync('userData')
         })
+        this.getExp()
     },
 
     buyDesire: function(e) {
@@ -284,6 +286,14 @@ Page({
                 })
                 wx.setStorageSync('desireData', self.data.desireData)
             }
+        })
+    }, 
+    getExp() {
+        var level = this.data.userData.level
+        var myexp = this.data.userData.exp
+        var exp = app.globalData.levelExp[level + 1]
+        this.setData({
+            percent: ((myexp / exp) * 100)
         })
     }
 

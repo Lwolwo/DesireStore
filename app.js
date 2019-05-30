@@ -29,6 +29,9 @@ Page = patchPage(Page)
 Component = patchComponent(Component)
 
 App({
+    globalData: {
+        levelExp: [0, 10, 30, 50, 80, 100]
+    },
   onLaunch: function () {
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
@@ -39,7 +42,9 @@ App({
         traceUser: true,
       })
     }
-    this.globalData = {}
+    this.globalData = {
+        levelExp: [0, 10, 30, 50, 80, 100]
+    }
     // 获取用户openid
     this.onGetOpenid()
   },
@@ -125,6 +130,8 @@ App({
     var userData = wx.getStorageSync('userData')
     db.collection('userData').doc(userData._id).update({
       data: {
+          exp: userData.exp,
+          level: userData.level,
         money: userData.money
       },
       success: res => {
