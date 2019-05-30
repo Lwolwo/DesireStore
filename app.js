@@ -73,6 +73,7 @@ App({
           }
           this.onQuery('taskData')
           this.onQuery('desireData')
+          this.onQuery('recordData')
         }
         else {
           console.log('[数据库] [查询记录] 成功 云端没有该用户信息，建立新用户')
@@ -166,6 +167,30 @@ App({
         },
         fail: err => {
           console.log('[数据库] [更新记录] 失败 ' + err)
+        }
+      })
+    })
+
+    // 上传recordData
+    var recordData = wx.getStorageSync('recordData')
+    recordData.forEach(item => {
+      db.collection('recordData').where({
+        _openid: this.globalData.openid,
+        optid: item.optid
+      }).get({
+        success: res => {
+          // 0表明找不到这条操作记录
+          if (res.data.length === 0) {
+            db.collection('recordData').add({
+              data: item,
+              success: res => {
+                console.log('[数据库] [插入记录] 添加操作记录成功')
+              },
+              fail: err => {
+                console.error('[数据库] [插入记录] 添加操作记录失败', err)
+              }
+            })
+          }
         }
       })
     })

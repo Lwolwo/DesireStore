@@ -65,6 +65,7 @@ Page({
 
                         // 添加支出记录
                         var option = {
+                            optid: 0,
                             type: 1,
                             key: item._id,
                             title: item.title,
@@ -73,6 +74,7 @@ Page({
                         }
                         var recordData = wx.getStorageSync('recordData')
                         if (recordData) {
+                            option.optid = recordData.length
                             recordData.push(option)
                         }
                         else {

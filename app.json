@@ -5,6 +5,7 @@
         "pages/calendar/calendar",
         "pages/statistics/statistics",
         "pages/me/me",
+        "pages/me/record/record",
         "pages/index/task/task",
         "pages/index/store/store"
     ],

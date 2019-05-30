@@ -16,6 +16,15 @@ Page({
             userData: wx.getStorageSync('userData')
         })
     },
+
+    changePage: function (e) {
+        var pagename = e.currentTarget.dataset.pagename
+        if (pagename === '流水账') {
+            wx.navigateTo({
+                url: './record/record'
+            })
+        }
+    },
     
 
     /**

@@ -190,7 +190,8 @@ Page({
 
         // 添加收入记录
         var option = {
-            tpye: 0,
+            optid: 0,
+            type: 0,
             key: item._id,
             title: item.title,
             time: new Date().Format('yyyy-MM-dd hh:mm:ss'),
@@ -198,6 +199,7 @@ Page({
         }
         var recordData = wx.getStorageSync('recordData')
         if (recordData) {
+            option.optid = recordData.length
             recordData.push(option)
         }
         else {
