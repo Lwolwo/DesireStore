@@ -275,7 +275,7 @@ Page({
             })
         }
         // 不是日常任务，禁用taskcount输入框，开启时间选择器，默认设count为1
-        else if (Number(e.detail.value === 2 || Number(e.detail.value) === 3)) {
+        else if (Number(e.detail.value) === 2 || Number(e.detail.value) === 3) {
             this.setData({
                 "addTaskData.taskcount": 1,
                 "addTaskData.due": new Date().Format('yyyy-MM-dd'),

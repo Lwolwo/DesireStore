@@ -46,15 +46,14 @@
         <view class="content">
             <input class='inputtext' type='text' placeholder='请输入任务名' value='{{addTaskData.taskname}}' bindinput="getTaskName"></input>
             
-            <input class='inputtext' disabled="{{ taskcountDis }}" type='text' placeholder='请输入次数(默认无限次)' value='{{addTaskData.taskcount}}' bindinput="getTaskCount"></input>
-
-            
             <!-- 选择任务类型 -->
             <view class="picker-wrapper">
                 <picker bindchange="bindPickerChangeType" value="{{addTaskData.indexType}}" range="{{addTaskData.type}}">
                     <view class="picker">{{addTaskData.type[addTaskData.indexType]}}</view>
                 </picker>
             </view>
+
+            <input class='inputtext' disabled="{{ taskcountDis }}" type='text' placeholder='请输入次数(默认无限次)' value='{{addTaskData.taskcount}}' bindinput="getTaskCount"></input>
 
             <!-- 选择任务难度 -->
             <view class="picker-wrapper">
