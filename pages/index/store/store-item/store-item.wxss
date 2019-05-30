@@ -85,14 +85,6 @@
     height: 92rpx;
 }
 
-.store-item-wrap::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 1rpx;
-    background: rgb(240, 240, 240);
-}
-
 .store-item-wrap .wrap {
     position: absolute;
     width: 100%;
