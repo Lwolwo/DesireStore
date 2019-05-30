@@ -20,6 +20,7 @@ Page({
         this.setData({
           userData: wx.getStorageSync('userData')
         })
+          this.getExp()
       }
     }
     
