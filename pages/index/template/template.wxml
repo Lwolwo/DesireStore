@@ -18,6 +18,7 @@
         <view class="item-describe">
             <text class="item-title">{{ item.title }}</text>
             <text wx:if="{{ item.typeid === 0 }}" class="item-count">{{ item.checkcount }}/{{ item.count === 0 ? '∞' : item.count }}</text>
+            <text class="item-expired" wx:if="{{ item.typeid !== 0 && item.status.expired }}"> {{item.expiredstr}} </text>
         </view>
         <text wx:if="{{ item.difficulty === 0}}" class="item-difficulty item-difficulty--easy">简单</text>
         <text wx:elif="{{ item.difficulty === 1}}" class="item-difficulty item-difficulty--normal">普通</text>

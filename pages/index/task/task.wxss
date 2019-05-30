@@ -111,6 +111,12 @@
     margin-top: 10rpx;
 }
 
+.task-container .task-item .item-describe .item-expired {
+    font-size: 24rpx;
+    color: #FF8080;
+    margin-top: 10rpx;
+}
+
 .task-container .task-item .item-difficulty {
     font-size: 24rpx;
     color: black;
