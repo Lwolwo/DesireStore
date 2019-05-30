@@ -26,6 +26,7 @@ Page({
         today: '',
         taskcountDis: false,     // 次数input禁用控制变量
         datepickerDis: false,    // 日期选择器禁用控制器
+        delBtnWidth: 140,
 
         addTaskData: {
             taskname: '',
@@ -455,5 +456,120 @@ Page({
             percent: ((myexp / exp) * 100),
             userData: this.data.userData
         })
-    }
+    },
+    touchS: function (e) {
+        if (e.touches.length === 1) {
+            this.setData({
+                // 设置触摸起始点水平方向位置
+                startX: e.touches[0].clientX
+            })
+        }
+    },
+    touchM: function (e) {
+        if (e.touches.length === 1) {
+            // 手指移动时水平方向位置
+            var moveX = e.touches[0].clientX
+            // 手指起始点位置与移动期间的差值
+            var disX = this.data.startX - moveX
+            var delBtnWidth = this.data.delBtnWidth
+            var taskStyle = ""
+            // 如果移动距离小于等于0，文本层位置不变
+            if (disX <= 0) {
+                taskStyle = "left: 0rpx"
+            } 
+            // 移动距离大于0，文本层left值等于手指移动距离
+            else if (disX > 0) {
+                taskStyle = "left: -" + disX + "rpx"
+
+                if (disX >= delBtnWidth) {
+                    // 控制手指移动距离最大值为删除按钮的宽度
+                    taskStyle = "left: -" + delBtnWidth + "rpx"
+                }
+            }
+            // 获取手指触摸的是哪一项
+            var id = e.currentTarget.dataset.id
+            var taskData = this.data.taskData
+            taskData.forEach(item => {
+                if (item._id === id) {
+                    item.taskStyle = taskStyle
+                }
+                else {
+                    item.taskStyle = ''
+                }
+            })
+            //更新列表的状态
+            this.setData({
+                taskData: taskData
+            })
+        }
+    },
+
+    touchE: function (e) {
+        if (e.changedTouches.length === 1) {
+            //手指移动结束后水平位置
+            var endX = e.changedTouches[0].clientX
+            //触摸开始与结束，手指移动的距离
+            var disX = this.data.startX - endX
+            var delBtnWidth = this.data.delBtnWidth
+            //如果距离小于删除按钮的1/2，不显示删除按钮
+            var taskStyle = disX > delBtnWidth / 2 ? "left: -" + delBtnWidth + "rpx" : "left: 0rpx"
+            //获取手指触摸的是哪一项
+            var id = e.currentTarget.dataset.id
+            var taskData = this.data.taskData
+            taskData.forEach(item => {
+                if (item._id === id) {
+                    item.taskStyle = taskStyle
+                }
+                else {
+                    item.taskStyle = ''
+                }
+            })
+            //更新列表的状态
+            this.setData({
+                taskData: taskData
+            })
+        }
+    },
+    deleteTask(e) {
+
+        var id = e.currentTarget.dataset.id
+        var self = this
+        var taskArray = this.data.taskData
+
+        let index
+        for (let i = 0; i < taskArray.length; i++) {
+            if (taskArray[i]._id === id) {
+                index = i
+                break
+            }
+        }
+        let item = self.data.taskData[index]
+
+        const db = wx.cloud.database()
+
+        wx.showModal({
+            title: '提示',
+            content: '确定要删除该任务吗？',
+            success: function(res) {
+                if (res.confirm) {
+                    taskArray.splice(index, 1);
+                    // 删除数据库对应的任务
+                    db.collection('taskData').doc(item._id).remove({
+                    success: res => {
+                        console.log('[数据库] [删除记录] 成功')
+                    },
+                    fail: err => {
+                        console.error('[数据库] [删除记录] 失败', err)
+                    }
+                  })
+                } else if (res.cancel) {
+                    return false;
+                }
+                self.setData({
+                    taskData: self.data.taskData
+                })
+                wx.setStorageSync('taskData', self.data.taskData)
+            }
+        })
+    }, 
 })

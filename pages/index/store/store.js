@@ -329,12 +329,6 @@ Page({
             // 获取手指触摸的是哪一项
             var id = e.currentTarget.dataset.id
             var desireData = this.data.desireData
-            var index
-            for (let i = 0; i < desireData.length; i++) {
-                if (desireData[i]._id === id) {
-                    index = i
-                }
-            }
             desireData.forEach(item => {
                 if (item._id === id) {
                     item.desireStyle = desireStyle
@@ -362,12 +356,6 @@ Page({
             //获取手指触摸的是哪一项
             var id = e.currentTarget.dataset.id
             var desireData = this.data.desireData
-            var index
-            for (let i = 0; i < desireData.length; i++) {
-                if (desireData[i]._id === id) {
-                    index = i
-                }
-            }
             desireData.forEach(item => {
                 if (item._id === id) {
                     item.desireStyle = desireStyle

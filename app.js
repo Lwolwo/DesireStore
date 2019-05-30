@@ -108,6 +108,7 @@ App({
                 item.status.expired = true
                 item.expiredstr = `${ddl.getMonth() + 1}月${ddl.getDate()}日`
               }
+              item.timestr = `${ddl.getMonth() + 1}月${ddl.getDate()}日`
             }
           })
         }
