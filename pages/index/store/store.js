@@ -11,7 +11,8 @@ Page({
         taskcount: '',
 
         difficulty: ['请选择难度', '简单', '普通', '中等', '困难'],
-        index: 0
+        index: 0,
+        delBtnWidth: 120
     },
 
     /**
@@ -295,8 +296,90 @@ Page({
         this.setData({
             percent: ((myexp / exp) * 100)
         })
-    }
+    },
+    touchS: function (e) {
+        if (e.touches.length === 1) {
+            this.setData({
+                // 设置触摸起始点水平方向位置
+                startX: e.touches[0].clientX
+            })
+        }
+    },
+    touchM: function (e) {
+        if (e.touches.length === 1) {
+            // 手指移动时水平方向位置
+            var moveX = e.touches[0].clientX
+            // 手指起始点位置与移动期间的差值
+            var disX = this.data.startX - moveX
+            var delBtnWidth = this.data.delBtnWidth
+            var desireStyle = ""
+            // 如果移动距离小于等于0，文本层位置不变
+            if (disX <= 0) {
+                desireStyle = "left: 0rpx"
+            } 
+            // 移动距离大于0，文本层left值等于手指移动距离
+            else if (disX > 0) {
+                desireStyle = "left: -" + disX + "rpx"
 
+                if (disX >= delBtnWidth) {
+                    // 控制手指移动距离最大值为删除按钮的宽度
+                    desireStyle = "left: -" + delBtnWidth + "rpx"
+                }
+            }
+            // 获取手指触摸的是哪一项
+            var id = e.currentTarget.dataset.id
+            var desireData = this.data.desireData
+            var index
+            for (let i = 0; i < desireData.length; i++) {
+                if (desireData[i]._id === id) {
+                    index = i
+                }
+            }
+            desireData.forEach(item => {
+                if (item._id === id) {
+                    item.desireStyle = desireStyle
+                }
+                else {
+                    item.desireStyle = ''
+                }
+            })
+            //更新列表的状态
+            this.setData({
+                desireData: desireData
+            })
+        }
+    },
 
-
+    touchE: function (e) {
+        if (e.changedTouches.length === 1) {
+            //手指移动结束后水平位置
+            var endX = e.changedTouches[0].clientX
+            //触摸开始与结束，手指移动的距离
+            var disX = this.data.startX - endX
+            var delBtnWidth = this.data.delBtnWidth
+            //如果距离小于删除按钮的1/2，不显示删除按钮
+            var desireStyle = disX > delBtnWidth / 2 ? "left: -" + delBtnWidth + "rpx" : "left: 0rpx"
+            //获取手指触摸的是哪一项
+            var id = e.currentTarget.dataset.id
+            var desireData = this.data.desireData
+            var index
+            for (let i = 0; i < desireData.length; i++) {
+                if (desireData[i]._id === id) {
+                    index = i
+                }
+            }
+            desireData.forEach(item => {
+                if (item._id === id) {
+                    item.desireStyle = desireStyle
+                }
+                else {
+                    item.desireStyle = ''
+                }
+            })
+            //更新列表的状态
+            this.setData({
+                desireData: desireData
+            })
+        }
+    },
 })

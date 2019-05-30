@@ -7,9 +7,9 @@
 
 <view class="item">
     <block wx:for="{{desireData}}" wx:key="{{item.desireid}}">
-        <view class="items" bindtap="buyDesire" data-desireid="{{ item.desireid }}" bindlongpress="deleteDesire">
+        <!-- <view class="items" bindtap="buyDesire" data-desireid="{{ item.desireid }}" bindlongpress="deleteDesire"> -->
             <template is="store-item" data="{{...item}}"></template>
-        </view>
+        <!-- </view> -->
     </block>
 </view>
 

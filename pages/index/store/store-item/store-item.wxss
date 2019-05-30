@@ -72,3 +72,53 @@
 .item-hard {
     background: rgba(34, 34, 255, 0.6);
 }
+
+.store-item-wrap {
+    position: relative;
+}
+
+.store-item-wrap .clear {
+    content: "";
+    display: block;
+    clear: both;
+    background: white;
+    height: 92rpx;
+}
+
+.store-item-wrap::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1rpx;
+    background: rgb(240, 240, 240);
+}
+
+.store-item-wrap .wrap {
+    position: absolute;
+    width: 100%;
+    background: white;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    transition: left 0.2s ease-in-out;
+}
+
+.store-item-wrap .item-del {
+    width: 120rpx;
+    height: 92rpx;
+    background: #CC3333;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.store-item-wrap .item-icon {
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
