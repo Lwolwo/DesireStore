@@ -10,7 +10,7 @@
     <view class="task">
         <block wx:for="{{ taskData }}" wx:key="{{ item._id }}">
             <block wx:if="{{ item.typeid === currentbar && !item.status.finished && !item.status.expired }}">
-                <template is="taskTemplate" data="{{ item, reward: reward, index: index }}"/>
+                <template is="taskTemplate" data="{{ item, reward: reward, index: index, delBtnHeight }}"/>
             </block>
         </block>
     </view>
@@ -21,7 +21,7 @@
         <view class="task-todaychecked-container">
             <block wx:for="{{ taskData }}" wx:key="{{ item._id }}">
                 <block wx:if="{{ item.typeid === currentbar && !item.status.finished && item.status.expired }}">
-                    <template is="taskTemplate" data="{{ item, reward: reward, index: index }}" />
+                    <template is="taskTemplate" data="{{ item, reward: reward, index: index, delBtnHeight }}" />
                 </block>
             </block>
         </view>

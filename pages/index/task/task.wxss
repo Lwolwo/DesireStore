@@ -191,6 +191,7 @@
 
 .task-item-wrap {
     position: relative;
+    height: 100%;
 }
 
 .task-item-wrap .clear {
@@ -198,7 +199,6 @@
     display: block;
     clear: both;
     background: white;
-    height: 100rpx;
 }
 
 .task-item-wrap .wrap {
@@ -213,7 +213,6 @@
 
 .task-item-wrap .item-del {
     width: 120rpx;
-    height: 100rpx;
     background: #CC3333;
     text-align: center;
     position: absolute;

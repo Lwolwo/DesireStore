@@ -1,4 +1,5 @@
 const app = getApp()
+
 Page({
 
     /**
@@ -27,6 +28,7 @@ Page({
         taskcountDis: false,     // 次数input禁用控制变量
         datepickerDis: false,    // 日期选择器禁用控制器
         delBtnWidth: 140,
+        delBtnHeight: 50,
 
         addTaskData: {
             taskname: '',
@@ -59,6 +61,11 @@ Page({
             taskData: wx.getStorageSync('taskData')
         })
         this.getExp()
+        wx.createSelectorQuery().select('.wrap').boundingClientRect(rect => {
+            this.setData({
+                delBtnHeight: rect.height
+            })
+        }).exec()
     },
     onShow: function() {
         const animation = wx.createAnimation({

@@ -82,7 +82,6 @@
     display: block;
     clear: both;
     background: white;
-    height: 92rpx;
 }
 
 .store-item-wrap .wrap {
@@ -97,7 +96,6 @@
 
 .store-item-wrap .item-del {
     width: 120rpx;
-    height: 92rpx;
     background: #CC3333;
     text-align: center;
     position: absolute;

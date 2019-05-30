@@ -32,10 +32,10 @@
                     <text wx:else class="item-reward">+{{ reward[item.difficulty] }}</text>
                 </view>
             </view>
-            <view data-id="{{ item._id }}" catch:tap="deleteTask" class="item-del">
+            <view data-id="{{ item._id }}" catch:tap="deleteTask" class="item-del" style="height: {{ delBtnHeight }}px">
                 <image class="item-icon" src="../../images/delete.png" />
             </view>
-            <view class="clear"></view>
+            <view class="clear" style="height: {{delBtnHeight}}px"></view>
         </view>
     </block>
     <block wx:else>

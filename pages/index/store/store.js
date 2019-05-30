@@ -12,7 +12,8 @@ Page({
 
         difficulty: ['请选择难度', '简单', '普通', '中等', '困难'],
         index: 0,
-        delBtnWidth: 120
+        delBtnWidth: 120,
+        delBtnHeight: 50
     },
 
     /**
@@ -24,6 +25,11 @@ Page({
             userData: wx.getStorageSync('userData')
         })
         this.getExp()
+        wx.createSelectorQuery().select('.wrap').boundingClientRect(rect => {
+            this.setData({
+                delBtnHeight: rect.height
+            })
+        }).exec()
     },
 
     buyDesire: function(e) {
