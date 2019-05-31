@@ -27,6 +27,10 @@ Page({
             wx.navigateTo({
                 url: './aboutus/aboutus'
             })
+        } else if (pagename === '使用方法') {
+            wx.navigateTo({
+                url: './instruction/instruction',
+            })
         }
     },
 

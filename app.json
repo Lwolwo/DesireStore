@@ -5,6 +5,7 @@
         "pages/me/me",
         "pages/me/record/record",
         "pages/me/aboutus/aboutus",
+        "pages/me/instruction/instruction",
         "pages/index/task/task",
         "pages/index/store/store"
     ],
