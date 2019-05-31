@@ -210,10 +210,10 @@ Page({
 
 
         // 取到数组的最后一项的id
-        let id = self.data.desireData[self.data.desireData.length - 1].desireid;
+        //let id = self.data.desireData[self.data.desireData.length - 1].desireid;
 
         var newdata = {
-            desireid: id + 1,
+            //desireid: id + 1,
             title: taskname,
             grade: grade,
             get: 0,
