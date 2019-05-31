@@ -23,6 +23,10 @@ Page({
             wx.navigateTo({
                 url: './record/record'
             })
+        } else if (pagename === '关于我们') {
+            wx.navigateTo({
+                url: './aboutus/aboutus'
+            })
         }
     },
 

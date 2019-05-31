@@ -4,6 +4,7 @@
         "pages/login/login",
         "pages/me/me",
         "pages/me/record/record",
+        "pages/me/aboutus/aboutus",
         "pages/index/task/task",
         "pages/index/store/store"
     ],
