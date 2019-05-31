@@ -2,8 +2,6 @@
     "pages": [
         "pages/index/index",
         "pages/login/login",
-        "pages/calendar/calendar",
-        "pages/statistics/statistics",
         "pages/me/me",
         "pages/me/record/record",
         "pages/index/task/task",
@@ -25,18 +23,6 @@
                 "iconPath": "pages/images/main.png",
                 "selectedIconPath": "pages/images/main-selected.png",
                 "text": "主页"
-            },
-            {
-                "pagePath": "pages/calendar/calendar",
-                "iconPath": "pages/images/calendar.png",
-                "selectedIconPath": "pages/images/calendar-selected.png",
-                "text": "日历"
-            },
-            {
-                "pagePath": "pages/statistics/statistics",
-                "iconPath": "pages/images/statistics.png",
-                "selectedIconPath": "pages/images/statistics-selected.png",
-                "text": "统计"
             },
             {
                 "pagePath": "pages/me/me",
