@@ -28,7 +28,7 @@ Page({
         taskcountDis: false,     // 次数input禁用控制变量
         datepickerDis: false,    // 日期选择器禁用控制器
         delBtnWidth: 140,
-        delBtnHeight: 50,
+        delBtnHeight: 20,
 
         addTaskData: {
             taskname: '',
@@ -62,9 +62,11 @@ Page({
         })
         this.getExp()
         wx.createSelectorQuery().select('.wrap').boundingClientRect(rect => {
-            this.setData({
-                delBtnHeight: rect.height
-            })
+            if (rect) {
+                this.setData({
+                    delBtnHeight: rect.height
+                })
+            }
         }).exec()
     },
     onShow: function() {
@@ -75,6 +77,13 @@ Page({
 
         this.animation = animation
         this.getExp()
+        wx.createSelectorQuery().select('.wrap').boundingClientRect(rect => {
+            if (rect) {
+                this.setData({
+                    delBtnHeight: rect.height
+                })
+            }
+        }).exec()
     },
     // 数据监听器
     watch: {
@@ -142,6 +151,13 @@ Page({
         this.setData({
             currentbar: typeid
         })
+        wx.createSelectorQuery().select('.wrap').boundingClientRect(rect => {
+            if (rect) {
+                this.setData({
+                    delBtnHeight: rect.height
+                })
+            }
+        }).exec()
     },
     // 复选框选中事件
     checkboxChange: function(e) {
@@ -423,6 +439,12 @@ Page({
                 wx.showToast({
                     title: '新增任务成功',
                 })
+
+                // 新任务对象添加time字段
+                if (newtask.due) {
+                    var ddl = new Date(newtask.due)
+                    newtask.timestr = `${ddl.getMonth() + 1}月${ddl.getDate()}日`
+                }
                 
                 // 新任务对象加上_id字段
                 newtask._id = res._id
@@ -435,6 +457,15 @@ Page({
                   showModal: false
                 })
                 wx.setStorageSync('taskData', this.data.taskData)
+
+                // 添加完任务后重新获取一次del按钮高度
+                wx.createSelectorQuery().select('.wrap').boundingClientRect(rect => {
+                    if (rect) {
+                        this.setData({
+                            delBtnHeight: rect.height
+                        })
+                    }
+                }).exec()
             },
             fail: err => {
                 wx.showToast({
