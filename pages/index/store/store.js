@@ -229,6 +229,9 @@ Page({
             success: res => {
                 console.log('[数据库] [插入记录] 添加欲望成功' + res)
 
+                // 添加_id字段
+                newdata._id = res
+
                 self.data.desireData.push(newdata)
 
                 self.setData({
