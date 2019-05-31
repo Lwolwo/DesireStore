@@ -17,7 +17,12 @@ Page({
   onLoad: function (options) {
     var recordData = wx.getStorageSync('recordData')
     recordData.forEach( item => {
-      item.timeformat = new Date(item.time).Format('MM-dd hh:mm')
+      // 处理IOS转换Date数据格式不兼容问题，IOS仅支持yyyy/MM/dd格式
+      let olddata = item.time
+      let mydata = new Date(olddata)
+      let newdata = mydata.getTime()
+      let olddata2 = olddata.replace(/-/g, '/')
+      item.timeformat = new Date(olddata2).Format('MM-dd hh:mm')
     })
     recordData.reverse()
     this.setData({
