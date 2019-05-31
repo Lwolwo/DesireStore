@@ -222,28 +222,41 @@ Page({
             allGet: taskcount
         }
 
-        self.data.desireData.push(newdata)
+        // 添加到数据库
+        const db = wx.cloud.database()
+        db.collection('desireData').add({
+            data: newdata,
+            success: res => {
+                console.log('[数据库] [插入记录] 添加欲望成功' + res)
 
+                self.data.desireData.push(newdata)
 
-        self.setData({
-            desireData: self.data.desireData,
-            showModal: false
-        })
-
-        wx.showToast({
-            title: '添加成功',
-            duration: 2000,
-            mask: true,
-            icon: 'success'
-        })
-
-        wx.createSelectorQuery().select('.wrap').boundingClientRect(rect => {
-            if (rect) {
-                this.setData({
-                    delBtnHeight: rect.height
+                self.setData({
+                    desireData: self.data.desireData,
+                    showModal: false
                 })
+
+                wx.showToast({
+                    title: '添加成功',
+                    duration: 2000,
+                    mask: true,
+                    icon: 'success'
+                })
+
+                wx.createSelectorQuery().select('.wrap').boundingClientRect(rect => {
+                    if (rect) {
+                        this.setData({
+                            delBtnHeight: rect.height
+                        })
+                    }
+                }).exec()
+            },
+            fail: err => {
+                console.err('[数据库] [插入记录] 添加欲望失败', err)
             }
-        }).exec()
+        })
+
+
 
     },
 
