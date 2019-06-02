@@ -64,7 +64,7 @@
 
             </view>
         </view>
-        <view data-desireid="{{ item.desireid }}" catch:tap="deleteDesire" class="item-del" style="height: {{ delBtnHeight }}px">
+        <view data-id="{{ item._id }}" catch:tap="deleteDesire" class="item-del" style="height: {{ delBtnHeight }}px">
             <image class="item-icon" src="../../images/delete.png" />
         </view>
         <view class="clear" style="height: {{ delBtnHeight }}px"></view>

@@ -35,12 +35,12 @@ Page({
     },
 
     buyDesire: function(e) {
-        var desireid = e.currentTarget.dataset.desireid
+        var id = e.currentTarget.dataset.id
         var self = this
         var user = this.data.userData
         var desireArray = this.data.desireData
 
-        let index = self.findItem(desireArray, desireid)
+        let index = self.findItem(desireArray, id)
         let item = self.data.desireData[index]
         let price = this.data.price[item.grade]
 
@@ -203,14 +203,16 @@ Page({
                 console.log('[数据库] [插入记录] 添加欲望 _id: ' + res._id)
 
                 // 添加_id字段
-                newdata._id = res
+                newdata._id = res._id
 
-                self.data.desireData.push(newdata)
+                var desireData = self.data.desireData
+                desireData.push(newdata)
 
                 self.setData({
-                    desireData: self.data.desireData,
+                    desireData: desireData,
                     showModal: false
                 })
+                wx.setStorageSync('desireData', self.data.desireData)
 
                 wx.showToast({
                     title: '添加成功',
@@ -249,19 +251,18 @@ Page({
 
     findItem(array, id) {
         for (let i = 0; i < array.length; i++) {
-            if (array[i].desireid == id)
+            if (array[i]._id === id)
                 return i;
         }
         return -1;
     },
 
     deleteDesire(e) {
-
-        var desireid = e.currentTarget.dataset.desireid
+        var id = e.currentTarget.dataset.id
         var self = this
         var desireArray = this.data.desireData
 
-        let index = self.findItem(desireArray, desireid)
+        let index = self.findItem(desireArray, id)
         let item = self.data.desireData[index]
 
         const db = wx.cloud.database()
