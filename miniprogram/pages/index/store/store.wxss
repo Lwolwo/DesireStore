@@ -25,6 +25,7 @@
     position: absolute;
     bottom: 100rpx;
     right: 120rpx;
+    z-index: 999;
 }
 
 .set-menu {

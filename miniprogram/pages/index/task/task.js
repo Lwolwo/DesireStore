@@ -393,7 +393,7 @@ Page({
                 })
 
                 // 在返回结果中会包含新创建的记录的 _id
-                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+                console.log('[数据库] [新增记录] 添加任务 _id: ', res._id)
                 wx.showToast({
                     title: '新增任务成功',
                 })
@@ -430,7 +430,7 @@ Page({
                     icon: 'none',
                     title: '新增任务失败'
                 })
-                console.error('[数据库] [新增记录] 失败：', err)
+                console.error('[数据库] [新增记录] 添加任务失败：', err)
                 return
             }
         })
@@ -552,10 +552,10 @@ Page({
                     // 删除数据库对应的任务
                     db.collection('taskData').doc(item._id).remove({
                     success: res => {
-                        console.log('[数据库] [删除记录] 成功')
+                        console.log('[数据库] [删除记录] 删除任务 _id: ' + item._id)
                     },
                     fail: err => {
-                        console.error('[数据库] [删除记录] 失败', err)
+                        console.error('[数据库] [删除记录] 删除任务失败', err)
                     }
                   })
                 } else if (res.cancel) {

@@ -6,7 +6,7 @@
 </view>
 
 <view class="item">
-    <block wx:for="{{desireData}}" wx:key="{{item.desireid}}">
+    <block wx:for="{{desireData}}" wx:key="{{item._id}}">
         <view class="items" bindtap="buyDesire" data-desireid="{{ item.desireid }}">
             <template is="store-item" data="{{item, delBtnHeight }}"></template>
         </view>

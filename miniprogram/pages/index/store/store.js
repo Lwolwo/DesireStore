@@ -44,7 +44,6 @@ Page({
         let item = self.data.desireData[index]
         let price = this.data.price[item.grade]
 
-
         wx.showModal({
             title: '确认',
             content: '确定使用￥' + price + ' 购买 \"' + item.title + '\" 这个欲望吗？',
@@ -53,18 +52,13 @@ Page({
                 if (res.confirm) {
                     if (user.money >= price) {
 
-
                         item.get++;
                         if (item.get >= item.allGet && item.allGet != -1) {
                             if (index > -1)
                                 desireArray.splice(index, 1);
-
-
                         }
 
-
                         user.money -= price
-
 
                         self.setData({
                             desireData: desireArray,
@@ -101,11 +95,9 @@ Page({
                             mask: true
                         })
                     }
-
                 }
             }
         })
-
     },
 
     clickButton() {
@@ -123,10 +115,7 @@ Page({
                         index: 0,
                         taskname: '',
                         taskcount: '',
-
                     })
-
-
                 }
 
                 if (res.tapIndex == 1) {
@@ -140,13 +129,8 @@ Page({
 
                     self.setData({
                         desireData: desireArray,
-
                     })
                 }
-
-
-
-
             }
         })
     },
@@ -169,7 +153,6 @@ Page({
         let taskcount = self.data.taskcount;
         let grade = self.data.index - 1;
 
-
         if (taskname.length == 0) {
             wx.showToast({
                 title: '请输入商品名',
@@ -188,8 +171,6 @@ Page({
             return
         }
 
-
-
         if (taskcount.length == 0) {
             taskcount = -1;
         } else {
@@ -204,15 +185,7 @@ Page({
                 })
                 return
             }
-
-
         }
-
-
-
-
-        // 取到数组的最后一项的id
-        //let id = self.data.desireData[self.data.desireData.length - 1].desireid;
 
         var newdata = {
             //desireid: id + 1,
@@ -227,7 +200,7 @@ Page({
         db.collection('desireData').add({
             data: newdata,
             success: res => {
-                console.log('[数据库] [插入记录] 添加欲望成功' + res)
+                console.log('[数据库] [插入记录] 添加欲望 _id: ' + res._id)
 
                 // 添加_id字段
                 newdata._id = res
@@ -258,9 +231,6 @@ Page({
                 console.err('[数据库] [插入记录] 添加欲望失败', err)
             }
         })
-
-
-
     },
 
     getTaskName(e) {
@@ -305,10 +275,10 @@ Page({
                     // 删除数据库对应的任务
                     db.collection('desireData').doc(item._id).remove({
                     success: res => {
-                        console.log('[数据库] [删除记录] 成功')
+                        console.log('[数据库] [删除记录] 删除欲望 _id: ' + item._id)
                     },
                     fail: err => {
-                        console.error('[数据库] [删除记录] 失败', err)
+                        console.error('[数据库] [删除记录] 删除欲望失败', err)
                     }
                   })
                 } else if (res.cancel) {
