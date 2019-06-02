@@ -6,18 +6,10 @@ Page({
      * 页面的初始数据
      */
     data: {
-        navigation: [{
-                typeid: 0,
-                title: '日常任务'
-            },
-            {
-                typeid: 1,
-                title: '主线任务'
-            },
-            {
-                typeid: 2,
-                title: '支线任务'
-            }
+        navigation: [
+            {typeid: 0, title: '日常任务'},
+            {typeid: 1, title: '主线任务'},
+            {typeid: 2, title: '支线任务'}
         ],
         currentbar: 0,
         reward: [2, 4, 6, 8],
@@ -46,8 +38,6 @@ Page({
                 expired: false,
                 today: false,
             }
-
-
         }
     },
 
@@ -76,14 +66,6 @@ Page({
         })
 
         this.animation = animation
-        this.getExp()
-        wx.createSelectorQuery().select('.wrap').boundingClientRect(rect => {
-            if (rect) {
-                this.setData({
-                    delBtnHeight: rect.height
-                })
-            }
-        }).exec()
     },
     // 数据监听器
     watch: {
@@ -92,17 +74,17 @@ Page({
                 case 0:
                     this.setData({
                         reward: [2, 4, 6, 8]
-                    });
+                    })
                     break // 日常任务
                 case 1:
                     this.setData({
                         reward: [2, 4, 6, 8]
-                    });
+                    })
                     break // 主线任务
                 case 2:
                     this.setData({
                         reward: [1, 3, 5, 7]
-                    });
+                    })
                     break // 支线任务
             }
         }
@@ -111,11 +93,11 @@ Page({
     computed: {
         expiredNum: {
             require: ['taskData', 'currentbar'],
-            fn({
-                taskData,
-                currentbar
-            }) {
+            fn({taskData, currentbar}) {
                 var result = 0
+                if (!taskData) {
+                    return 0
+                }
                 taskData.forEach(item => {
                     if (item.typeid === currentbar && item.status.expired) {
                         result++
@@ -126,11 +108,11 @@ Page({
         },
         checkedNum: {
             require: ['taskData', 'currentbar'],
-            fn({
-                taskData,
-                currentbar
-            }) {
+            fn({taskData, currentbar}) {
                 var result = 0
+                if (!taskData) {
+                    return 0
+                }
                 taskData.forEach(item => {
                     if (item.typeid === currentbar && item.status.finished) {
                         result++
@@ -184,7 +166,6 @@ Page({
         user.exp += money;
         this.getExp()
         
-    
         // 处理'已完成'列表数量
         var checkedNum = this.data.checkedNum
         if (item.status.finished) {
@@ -329,8 +310,7 @@ Page({
 
     addTask() {
         var data = this.data.addTaskData
-        console.log(data)
-
+        // console.log(data)
 
         // 错误检测
         if (data.taskname.length == 0) {
@@ -359,8 +339,6 @@ Page({
             return
         }
 
-        console.log('taskcount', data.taskcount)
-
         if (data.taskcount.length === 0) {
             // indexType为1才是‘日常任务’，并且data.indexType的类型是string
             if (Number(data.indexType) === 1) {
@@ -383,12 +361,8 @@ Page({
             }
         }
 
-        if (data.due.length == 0) {
-            data.due = null;
-        }
-
         // 把日常任务的due字段置为null
-        if (data.typeid === 0) {
+        if (data.indexType == 1) {
             data.due = null
         }
 
@@ -411,23 +385,7 @@ Page({
 
         const db = wx.cloud.database()
         db.collection('taskData').add({
-            data: {
-
-                title: data.taskname,
-                typeid: data.indexType - 1,
-                difficulty: data.indexDiff - 1,
-                due: data.due,
-                count: data.taskcount,
-                checkcount: 0,
-
-                lastwork: null,
-                status: {
-                    finished: false,
-                    expired: false,
-                    today: false,
-                }
-
-            },
+            data: newtask,
             success: res => {
                 this.setData({
                     taskData: this.data.taskData,

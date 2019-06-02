@@ -20,7 +20,7 @@ Page({
         this.setData({
           userData: wx.getStorageSync('userData')
         })
-          this.getExp()
+        this.getExp()
       }
     }
     
@@ -29,7 +29,7 @@ Page({
     this.setData({
       userData: wx.getStorageSync('userData')
     })
-      this.getExp()
+    this.getExp()
 
   },
   goTask: function () {
