@@ -1,7 +1,0 @@
-<template name="featureItem">
-    <view class="featureItem">
-        <text>{{item}}</text>
-        <view class="rarrow">
-        </view>
-    </view>
-</template>

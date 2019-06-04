@@ -1,9 +1,7 @@
 {
-  "description": "项目配置文件",
-  "cloudfunctionRoot": "cloudfunctions/",
-	"packOptions": {
-		"ignore": []
-	},
+	"description": "项目配置文件",
+	"cloudfunctionRoot": "cloudfunctions/",
+  "miniprogramRoot": "miniprogram/",
 	"setting": {
 		"urlCheck": true,
 		"es6": true,
@@ -16,29 +14,8 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.7.0",
 	"appid": "wxe62cc3d18567ee79",
-  "projectname": "cloud-DesireStore",
+	"projectname": "DesireStore",
 	"debugOptions": {
 		"hidedInDevtools": []
-	},
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": -1,
-			"list": []
-		}
 	}
 }
