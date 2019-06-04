@@ -9,6 +9,7 @@ Page({
 
         taskname: '',
         taskcount: '',
+        desireData: [],
 
         difficulty: ['请选择难度', '简单', '普通', '中等', '困难'],
         index: 0,
